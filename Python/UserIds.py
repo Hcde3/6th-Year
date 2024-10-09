@@ -1,4 +1,9 @@
-## CSV file not Used ###
+savefile = open("Passwords.csv","r")
+Users = {}
+for line in savefile:
+    data = (line.strip()).split(",")
+    Users[data[0]] = data[1]
+savefile.close()
 
 def passcheck(password):
     valid_length = len(password) >= 8
@@ -21,9 +26,7 @@ def passcheck(password):
     return valid_length and up_present and low_present and digit_present and special_present
 
 program_running = True
-Users = {}
 while program_running:
-    print("\n"*20)
     mode = input("1) Create new User ID\n2) Change a password\n3) Display all User IDs\n4) Quit\n")
     if mode == "1":
         entering_userid = True
@@ -54,8 +57,13 @@ while program_running:
             if not password_valid: print("Password does not satisfy criteria. Try Again.")
         Users[USERID] = password
     elif mode == "3":
+        print("\n")
         for userid in Users: print(userid,": ", Users[userid])
+        print("\n")
     elif mode == "4":
+        savefile = open("Passwords.csv","w")
+        for userdata in Users: savefile.write(f"{userdata},{Users[userdata]}\n")
+        savefile.close()
         program_running = False
     else:
         print("Invalid Option. Try Again.\n")
