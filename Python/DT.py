@@ -3,9 +3,9 @@ Definitions = {}
 Definitions["Biology"] = {}
 Definitions["Physics"] = {}
 Definitions["Biology"]["Genetics"] = {"DNA":"Deoxyribosenucleic acid"}
-Definitions["Physics"]["Electricity"] = {"Voltage":"V = IR"}
+Definitions["Physics"]["Electricity"] = {"Voltage":"V=IR"}
 
-print("""_________________________ Definitions Tester _________________________
+mode = input("""_________________________ Definitions Tester _________________________
 
 
 __DEFENITION___________
