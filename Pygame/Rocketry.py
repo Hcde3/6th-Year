@@ -37,7 +37,8 @@ def vectorcomponent(angle, magnitude, XorY):
 
 def g(b1,b2):
     distance = dis(b1.absC,b2.absC)
-    gravity = 6.7*10**-11*(b1.mass*b2.mass/(distance**2))
+    gravity = 6.7*(10**-11)*(b1.mass*b2.mass/(distance**2))
+    print((distance**2))
     return gravity
     
 
@@ -67,7 +68,7 @@ def angle(point1,point2):
 
 class Body:
     def __init__(self,mass,absC,vel,surf):
-        self.absC = absC #1000km
+        self.absC = absC #m
         self.mass = mass #kg
         self.surf = surf #m2
         self.vel = vel #1000km/s
@@ -85,11 +86,15 @@ center_ychange = 0
 window_change = 0
 screen = pygame.display.set_mode((window_sz,window_sz))#, flags)
 pygame.display.set_caption("Gravity")
-sphere = pygame.Surface((6,6))
+sphere = pygame.Surface((60,60))
 sphere.fill("Blue")
-Bodies = [Body(6*10**24,(0,0),(0,0),sphere),Body(6*10**24,(149597,149597),(0,0),sphere)]
+sphere2 = pygame.Surface((100,100))
+sphere2.fill("White")
+Bodies = [Body(6*10**24,(0,0),(0,0),sphere),Body(2*10**30,(1.5*10**11,1.5*10**11),(0,0),sphere2)]
+
 clock = pygame.time.Clock()
 tick = 0
+sectransform = 60*60*24
 while True:
     #______________________________ INPUTS ___________________________
     for event in pygame.event.get():
@@ -119,44 +124,38 @@ while True:
                     center_xdis = 0
                     center_ychange = 0
                 if event.key == pygame.K_o:
-                    if window - 1 > 0:
-                        window_change = -40
+                    window_change = -2
                 if event.key == pygame.K_i:
-                    window_change = 40
+                    window_change = 2
                 if event.key == pygame.K_w:
-                    center_ychange = 2
+                    center_ychange = 10
                 if event.key == pygame.K_s:
-                    center_ychange = -2
+                    center_ychange = -10
                 if event.key == pygame.K_a:
-                    center_xchange = 2
+                    center_xchange = 10
                 if event.key == pygame.K_d:
-                    center_xchange = -2
+                    center_xchange = -10
     
     #______________________________ MECHANICS ___________________________
     
     for B in Bodies:
         forces = []
-        acceleration = (0,0)
-        print(B.absC)
         for B2 in Bodies:
             if not B == B2:
-                forces.append([g(B,B2),angle(B.absC,B2.absC)]) #strength,angle
-                print(forces)
-                for F in forces:
-                    acceleration = (acceleration[0]+vectorcomponent(F[1],F[0]/B.mass,"x"),acceleration[1]+vectorcomponent(F[1],F[0]/B.mass,"y"))
-                    print(acceleration)
-                    acceleration = (acceleration[0],acceleration[1]) #sec>day
-                    print(vectorcomponent(F[1],F[0]/B.mass,"x"))
-        B.vel = (B.vel[0] + acceleration[0],B.vel[1] + acceleration[1])
-        print(B.vel,"vel")
-        B.absC = (B.absC[0]+B.vel[0],B.absC[1]+B.vel[1])
+                forces.append((vectorcomponent(angle(B.absC,B2.absC),g(B,B2),"x"),vectorcomponent(angle(B.absC,B2.absC),g(B,B2),"y")))
+        for F in forces:
+            B.vel = (B.vel[0] + (F[0]/B.mass),B.vel[1] + (F[1]/B.mass))
             
         
     
     #______________________________ GRAPHICS ______________________________
     screen.blit(void,(0,0))
-    for B in Bodies: window_blit(B)
+    for B in Bodies:
+        B.absC = (B.absC[0]+(B.vel[0]*sectransform),B.absC[1]+(B.vel[1]*sectransform))
+        window_blit(B)
     
+    center_xdis = -(Bodies[1].absC[0] - 200)
+    center_ydis = -(Bodies[1].absC[1] - 200)
     
     mouse_point = pygame.mouse.get_pos()
     center_xdis += center_xchange
