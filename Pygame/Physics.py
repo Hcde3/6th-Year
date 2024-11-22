@@ -40,9 +40,17 @@ def g(b1,b2):
     gravity = 6.7*(10**-11)*(b1.mass*b2.mass/(distance**2))
     return gravity
     
-def LorentzEquation(q,E,B,v):
+def LorentzEquation(b,E,B):
     x = math.cos(90-0)
-    F = q*(E + v*x*B)
+    vel_angle = angle(b.absC,(b.absC[0]+b.vel[0],b.absC[1]+b.vel[1]))
+    q = b.charge
+    v = b.vel
+    if q > 0:
+        F_angle = vel_angle-90
+    else:
+        F_angle = vel_angle-90
+    if b == Bodies[0]: print(F_angle,vel_angle,v)
+    F = (vectorcomponent(F_angle,q*(E + v[0]*x*B),"x"),vectorcomponent(F_angle,q*(E + v[1]*x*B),"y"))
     return F
 
 def angle(point1,point2):
@@ -70,9 +78,10 @@ def angle(point1,point2):
     return Angle
 
 class Body:
-    def __init__(self,mass,absC,vel,surf):
+    def __init__(self,mass,charge,absC,vel,surf):
         self.absC = absC #m
         self.mass = mass #kg
+        self.charge = charge #C
         self.surf = surf #m2
         self.vel = vel #m/s
         
@@ -102,13 +111,17 @@ sphere2 = pygame.Surface((60,60))
 sphere2.fill("White")
 floor = pygame.Surface((window_sz,window_sz))
 floor.fill("Green")
-Bodies = [Body(6,(0,0),(10,0),sphere),Body(2,(150,150),(0,0),sphere2)]
-NormalGround = SolidFloor("green",600,"v",1)
+Bodies = [Body(10**-2,2,(0,0),(1,1),sphere),Body(10**-2,-2,(150,150),(1,1),sphere2)]
+NormalGround = SolidFloor("green",600,"v",0.1)
 SolidFloors = [NormalGround]
+
+ElectricField = 0
+MagneticField = 1*10**-3
 
 clock = pygame.time.Clock()
 tick = 0
-sectransform = 1/60
+tickspeed = 60
+sectransform = (1/tickspeed)#*1/100
 while True:
     #______________________________ INPUTS ___________________________
     for event in pygame.event.get():
@@ -154,10 +167,11 @@ while True:
     
     for B in Bodies:
         forces = []
-        forces.append((0,9.8*B.mass))
+        #forces.append((0,9.8*B.mass))
+        forces.append(LorentzEquation(B,ElectricField,MagneticField))
         for B2 in Bodies:
             if not B == B2:
-                forces.append((vectorcomponent(angle(B.absC,B2.absC),g(B,B2),"x"),vectorcomponent(angle(B.absC,B2.absC),g(B,B2),"y")))
+                pass
         for Floor in SolidFloors:
             if Floor.side == "v":
                 if Floor.height < B.absC[1]:
@@ -185,4 +199,4 @@ while True:
     window += window_change
     pygame.display.update()
     tick += 1
-    clock.tick(60)
+    clock.tick(tickspeed)
