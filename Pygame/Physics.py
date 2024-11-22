@@ -45,12 +45,13 @@ def LorentzEquation(b,E,B):
     vel_angle = angle(b.absC,(b.absC[0]+b.vel[0],b.absC[1]+b.vel[1]))
     q = b.charge
     v = b.vel
+    v_ = math.sqrt(v[0]**2 + v[1]**2)
     if q > 0:
-        F_angle = vel_angle-90
+        F_angle = vel_angle+90
     else:
-        F_angle = vel_angle-90
+        F_angle = vel_angle+90
     if b == Bodies[0]: print(F_angle,vel_angle,v)
-    F = (vectorcomponent(F_angle,q*(E + v[0]*x*B),"x"),vectorcomponent(F_angle,q*(E + v[1]*x*B),"y"))
+    F = (vectorcomponent(F_angle,q*(E + v_*x*B),"x"),vectorcomponent(F_angle,q*(E + v_*x*B),"y"))
     return F
 
 def angle(point1,point2):
@@ -105,13 +106,13 @@ center_ychange = 0
 window_change = 0
 screen = pygame.display.set_mode((window_sz,window_sz))#, flags)
 pygame.display.set_caption("Gravity")
-sphere = pygame.Surface((60,60))
+sphere = pygame.Surface((6,6))
 sphere.fill("Blue")
-sphere2 = pygame.Surface((60,60))
+sphere2 = pygame.Surface((6,6))
 sphere2.fill("White")
 floor = pygame.Surface((window_sz,window_sz))
 floor.fill("Green")
-Bodies = [Body(10**-2,2,(0,0),(1,1),sphere),Body(10**-2,-2,(150,150),(1,1),sphere2)]
+Bodies = [Body(1,2,(0,0),(1,1),sphere),Body(1,-2,(150,150),(1,1),sphere2)]
 NormalGround = SolidFloor("green",600,"v",0.1)
 SolidFloors = [NormalGround]
 
