@@ -50,7 +50,6 @@ def LorentzEquation(b,E,B):
         F_angle = vel_angle+90
     else:
         F_angle = vel_angle+90
-    if b == Bodies[0]: print(F_angle,vel_angle,v)
     F = (vectorcomponent(F_angle,q*(E + v_*x*B),"x"),vectorcomponent(F_angle,q*(E + v_*x*B),"y"))
     return F
 
@@ -78,6 +77,14 @@ def angle(point1,point2):
         #print("UpRight")
     return Angle
 
+def Collision(b1,b2):
+    m1 = b1.mass
+    u1 = b1.vel[0]
+    m2 = b2.mass
+    u2 = b2.vel[0]
+    v = ((m1-m2)/(m1+m2))*u1 + (2*m2/(m1+m2))*u2
+    return (v,b1.vel[1])
+
 class Body:
     def __init__(self,mass,charge,absC,vel,surf):
         self.absC = absC #m
@@ -87,11 +94,12 @@ class Body:
         self.vel = vel #m/s
         
 class SolidFloor:
-    def __init__(self,colour,height,side,friction):
+    def __init__(self,colour,height,side,friction,restitution):
         self.height = height
         self.colour = colour
         self.side = side
-        self.friction = friction
+        self.μ = friction
+        self.e = restitution
         
 pygame.init()
 WHITE = (250,250,250)
@@ -106,18 +114,18 @@ center_ychange = 0
 window_change = 0
 screen = pygame.display.set_mode((window_sz,window_sz))#, flags)
 pygame.display.set_caption("Gravity")
-sphere = pygame.Surface((6,6))
+sphere = pygame.Surface((60,60))
 sphere.fill("Blue")
-sphere2 = pygame.Surface((6,6))
+sphere2 = pygame.Surface((60,60))
 sphere2.fill("White")
 floor = pygame.Surface((window_sz,window_sz))
 floor.fill("Green")
-Bodies = [Body(1,2,(0,0),(1,1),sphere),Body(1,-2,(150,150),(1,1),sphere2)]
-NormalGround = SolidFloor("green",600,"v",0.1)
+Bodies = [Body(1,2,(0,0),(100,1),sphere),Body(1,-2,(150,150),(1,1),sphere2)]
+NormalGround = SolidFloor("green",600,"v",0.99,0.2)
 SolidFloors = [NormalGround]
 
 ElectricField = 0
-MagneticField = 1*10**-3
+MagneticField = 0*1*10**-3
 
 clock = pygame.time.Clock()
 tick = 0
@@ -168,16 +176,20 @@ while True:
     
     for B in Bodies:
         forces = []
-        #forces.append((0,9.8*B.mass))
+        forces.append((0,9.8*B.mass))
         forces.append(LorentzEquation(B,ElectricField,MagneticField))
         for B2 in Bodies:
             if not B == B2:
-                pass
+                Bvel = Collision(B,B2)
+                #B2vel = Collision(B2,B)
+                B.vel = Bvel
+                #B2.vel = B2vel
         for Floor in SolidFloors:
             if Floor.side == "v":
                 if Floor.height < B.absC[1]:
-                    forces.append((Floor.friction*-B.vel[0],-20*B.mass))
-                    B.absC = (B.absC[0],Floor.height)
+                    if B.vel[1] > 0:
+                        B.vel = (B.vel[0]*Floor.μ,-B.vel[1]*Floor.e)
+                        B.absC = (B.absC[0],Floor.height)
         for F in forces:
             B.vel = (B.vel[0] + (F[0]/B.mass),B.vel[1] + (F[1]/B.mass))
         
