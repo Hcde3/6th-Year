@@ -1,0 +1,29 @@
+<html>
+<head>
+   <title>Check whether the Checkbox is checked or not</title>
+</head>
+<body>
+   <h2>Check whether the Checkbox is checked or not using <i> .checked attribute </i></h2>
+   <h4>Check the below checkbox to see the text div</h4>
+   <input type = "checkbox" id = "checkbox">
+   <div id = "text"> </div>
+   <script>
+      let checkbox = document.getElementById("checkbox");
+      console.log(checkbox)
+      checkbox.addEventListener( "change", () => {
+         if ( checkbox.checked ) {
+            text.innerHTML = " Check box is checked. ";
+         } else {
+            text.innerHTML = "";
+         }
+      });
+
+        const app = initializeApp(firebaseConfig);
+        import { getDatabase, ref, set, get, update, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+        const database = getDatabase(); //This creates a firebase instance
+        // let link_to_database_root = ref(database); //This creates a reference (link) to the root of your database
+        //This will create a reference to whatever address comes after the comma
+        const firebaseRef = ref(database);
+   </script>
+</body>
+</html>

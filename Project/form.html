@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+</body>
+<form id = "data">
+    <p>Personal Details</p>
+    <label for = "fname =">First name</label> 
+    <input type = "text" id = "fname" name ="fname"><br>
+    <label for = "lname" > Last name</label>
+    <input type = "text " id = "lname" name=" lname"><br> 
+    <label for = "age">Age:</label>
+    <input type="number" id = "age" name = "age" required  placeholder="YYYY"><br> 
+
+    <p>Experience in Astronomy</p>
+    <input type = "checkbox" id = "choice1" name = "choice1" checked>
+    <label for = "choice1" >Do you have an interest in Astronomy?</label><br> 
+    <input type = "checkbox" id ="choice2" name = "interest" value = "Car" checked>
+    <label for = "vehicle2" >Do you own a personal telescope?</label><br>
+
+    <p>Favourite Space Agency</p>
+    <select  id="agency">
+        <option>No Preference</option>
+        <option>European Space Agency (ESA)</option>
+        <option>National Aeronautics and Space Administration (NASA)</option>
+        <option>SpaceX</option>
+        <option>China National Space Administration (CNSA)</option>
+    </select><br>
+
+    <input type="submit" id="submit" value="Submit">
+</form>
+
+<canvas id="InterestChart" style="width:100%;max-width:600px"></canvas>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyAgpnolPXe-wPV0Bi4kr0ZXSwEjQE4rqE4",
+    authDomain: "exoplanet-dataset.firebaseapp.com",
+    databaseURL: "https://exoplanet-dataset-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "exoplanet-dataset",
+    storageBucket: "exoplanet-dataset.firebasestorage.app",
+    messagingSenderId: "1061417298619",
+    appId: "1:1061417298619:web:9f73a30d16153b410b579e",
+    measurementId: "G-TEVPDM6P9H"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    import { getDatabase, push, ref, set, get, update, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    const database = getDatabase(); //This creates a firebase instance
+    // let link_to_database_root = ref(database); //This creates a reference (link) to the root of your database
+    //This will create a reference to whatever address comes after the comma
+    const firebaseRef = ref(database, "/Survey Data");
+
+    /////// Reading Inputs ///////
+    let data = document.getElementById("data")
+    data.addEventListener("submit",sendtofirebase)
+    function sendtofirebase(event){
+        event.preventDefault()
+        let textinput = document.getElementById("fname")
+        let firstnameData = textinput.value;
+        let text2input = document.getElementById("lname")
+        let surnameData = text2input.value;
+        let NumberAgeInput = document.getElementById("age").value
+
+        let interestinput = document.getElementById("choice1")
+        let interestData = interestinput.checked;
+        let telescopeinput = document.getElementById("choice2")
+        let telescopeData = telescopeinput.checked;
+            // alert("adad")
+        let agencyinput = document.getElementById("agency");
+        let agencyData = agencyinput.value;
+        let surveydata = {"userName":firstnameData, "usersurname":surnameData, "userAge":NumberAgeInput, "interested":interestData, "telescope owned":telescopeData, "favourite agency":agencyData};
+        push(firebaseRef, surveydata )
+    }
+
+    /////// Graphs ///////
+    function processing(snapshot) {
+            let in_distribution = [0,0]
+
+
+            let entryamt = snapshot.size;
+            let count = 0
+            snapshot.forEach(function(){console.log('Key =>',snapshot.key); console.log('Value =>',snapshot.val());});
+            let fbcontents = snapshot.val()["Survey Data"];
+            for (var answers in fbcontents) {
+                count += 1
+                answers = fbcontents[answers]
+                let astrointerest = answers["interested"]
+                if (astrointerest){
+                    in_distribution[0] = in_distribution[0] + 1
+                }
+                else{
+                    in_distribution[1] = in_distribution[1] + 1
+                }
+                if (count = 1){
+                    console.log("HERE")
+                    GRAPH_I(astrointerest)
+                }
+            }
+
+        }
+
+    function GRAPH_I(r) {
+        var xValues = ["Yes","No"];
+        var yValues = astrointerest;
+
+        new Chart("InterestChart", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+            data: yValues
+            }]
+        },
+        options: {
+                responsive: true,
+                title: {
+                display: true,
+                text: "Average Radius per Planet Type"
+                }
+            } 
+    });
+    }
+    get(firebaseRef).then(processing);
+</script>
+</html>
