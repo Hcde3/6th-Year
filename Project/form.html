@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+</body>
+<form id = "data">
+    <p>Personal Details</p>
+    <label for = "fname =">First name</label> 
+    <input type = "text" id = "fname" name ="fname"><br>
+    <label for = "lname" > Last name</label>
+    <input type = "text " id = "lname" name=" lname"><br> 
+    <label for = "age">Age:</label>
+    <input type="number" id = "age" name = "age" required  placeholder="YYYY"><br> 
+
+    <p>Experience in Astronomy</p>
+    <input type = "checkbox" id = "choice1 " name = "choice1">
+    <label for = "interest" >Do you have an interest in Astronomy?</label><br> 
+    <input type = "checkbox" id ="choice2" name = "interest" value = "Car">
+    <label for = "vehicle2" >Do you own a personal telescope?</label><br>
+
+    <p>Favourite Space Agency</p>
+    <select  id="agency">
+        <option>No Preference</option>
+        <option>European Space Agency (ESA)</option>
+        <option>National Aeronautics and Space Administration (NASA)</option>
+        <option>SpaceX</option>
+        <option>China National Space Administration (CNSA)</option>
+    </select><br>
+
+    <input type="submit" id="submit" value="Submit">
+</form>
+
+<script type="module">
+
+    let data = document.getElementById("data")
+    data.addEventListener("submit",sendtofirebase)
+    function sendtofirebase(event){
+        event.preventDefault()
+        let textinput = document.getElementById("fname")
+        let firstnameData = textinput.value;
+        let text2input = document.getElementById("lname")
+        let surnameData = text2input.value;
+        let NumberAgeInput = document.getElementById("age").value
+            
+        let interestinput = document.getElementById("choice1")
+        let interestData = interestinput.checked;
+        let telescopeinput = document.getElementById("choice2")
+        let teloscopeData = teloscopeinput.checked;
+            // alert("adad")
+        let agencyinput = document.getElementById("agency");
+        let agencyData = agencyinput.value;
+        console.log({"userName":userData, "usersurname":surnameData, "userAge":NumberAgeInput, "interested":interestData, "telescope owned":telescopeData, "favourite agency":agencyData});
+        
+            //push(firebaseRef, )
+    }
+
+</script>
+</html>
