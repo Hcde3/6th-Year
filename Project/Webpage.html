@@ -25,7 +25,7 @@
     <h3>My aim here is to gather data to analyse the trends and contrasts displayed by exoplanet types and to present this on the visualisations found below.</h3>
     <h1>Interactive Charts</h1>
     <h2>Choose 1 or more planet categories to chart.</h2>
-    <form>
+    <form id="forms">
         <input type=checkbox id=vehicle1>
         <label for=vehicle1>Earthlike</label>
         <input type=checkbox id=vehicle2>
@@ -42,7 +42,7 @@
         <label for=vehicle1>Brown Dwarf</label>
         <input type=checkbox id=vehicle2>
         <label for=vehicle1>Habitables</label>
-        <button type ="button" onclick="ChartRefresh()">Refresh</button>
+        <input type ="submit"  value="Refresh"></input>
     </form>
     <canvas id="PlanetChart" style="width:100%;max-width:600px"></canvas>
     <form>
@@ -72,14 +72,7 @@
     <h3>You could also use the average radius of the type of exoplanet being searched for to optimise the search. Using the transit method larger radii are more notable when crossing the average star, while smaller radii will be easier seen when passing smaller stars and harder when passing large stars.</h3>
     <h3>If you wanted to do your own research on exoplanets the 0.95m Kepler Telescope is definitely the best source of data as it provided around 75% of the exoplanetary data used in these visualisations.</h3>
     <script type="module">
-    
 
-
-    //    function ChartRefresh() {
-    //        var show_EL = document.getElementById('EL').checked;
-    //        console.log(show_EL)
-    //        get(firebaseRef).then(processing);
-    //    }                                                                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     /////// Importing and Initialising Firebase ///////
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -187,6 +180,15 @@
             }
         });
     }
+
+
+    function ChartRefresh(event) {
+        event.preventDefault()
+        console.log("here")
+        get(firebaseRef).then(processing);
+       }            
+    let submission = document.getElementById("forms")
+    submission.addEventListener("submit",ChartRefresh)
 
     get(firebaseRef).then(processing);
     </script>
