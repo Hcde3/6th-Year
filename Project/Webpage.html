@@ -4,9 +4,10 @@
     <title>Exoploration</title>
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<body id="whitetext" style="background-image: url('https://th-thumbnailer.cdn-si-edu.com/QSCkx6Q5atqg6pF-YB6BVfaVnUg=/fit-in/1600x0/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/f1/9e/f19eacd2-bc56-44b4-b8a0-7576a2a4b02e/screen_shot_2017-08-14_at_102311_pm.png');">
-    <h1>Exoploration</h1>
-    <p>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </p>
+<body>
+    <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </h1>
+    <marquee loop="infinite" height="100px" direction="right">Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration</marquee>
+    <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</h1>
     
     <img src="https://opengameart.org/sites/default/files/earthlike_planet_1-alpha.png" width="85" height="65">
     <img src="https://imgproxy.attic.sh/unsafe/rs:fit:768:768:1:1/t:1:FF00FF:false:false/pngo:false:true:256/aHR0cHM6Ly9hdHRp/Yy5zaC96MXYxaW55/ZjIybnR0eWpyNnpm/aWwwdmNhZ3Vh.png" width="70" height="70">
@@ -16,67 +17,72 @@
     <img src="https://cdn.pixabay.com/photo/2023/04/18/04/45/cosmos-7934144_640.png" width="275" height="275">
     <img src="https://static.wixstatic.com/media/76c963_90065f6bb0ac4a09ace1d8701db78e91~mv2.png/v1/fill/w_270,h_269,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Star%20Brown%20Dwarf.png" width="400" height="400">
     
-    <p>This website was made to show the relationship of planetary properties and the type of planet and these graphs are here to compare the analysis of planet types together.</p>
-    <h1>Graphs</h1>
+    <!--Display-->
+    <H1>Exoplanets</H1>
+    <h3>An exoplanet is a planet that resides outside the solar system. Exoplanets are extremely varied; some are 10x bigger than Jupiter, others are smaller than Mercury and some are surprisingly similar to Earth.</h3>
+    <h3>This information system is an exploration of exoplanets, their properties and the various types of exoplanets found across the Milky Way.</h3>
+    <h3>Most Exoplanets can be categorised into types based off their properties, for example mass. These types are: Earthlikes, Super Earths, Mega Earths, Neptunelikes, Jupiterlikes, Hot Jupiters and Brown Dwarves.</h3>
+    <h3>My aim here is to gather data to analyse the trends and contrasts displayed by exoplanet types and to present this on the visualisations found below.</h3>
+    <h1>Interactive Charts</h1>
     <h2>Choose 1 or more planet categories to chart.</h2>
     <form>
-        <input type=checkbox id=vehicle1 name=Earthlike value=Category id=EL>
+        <input type=checkbox id=vehicle1>
         <label for=vehicle1>Earthlike</label>
-        <input type=checkbox id=vehicle2 name=SuperEarth value=Category>
+        <input type=checkbox id=vehicle2>
         <label for=vehicle1>Super Earth</label>
-        <input type=checkbox id=vehicle1 name=MegaEarth value=Category>
+        <input type=checkbox id=vehicle1>
         <label for=vehicle1>Mega Earth</label>
-        <input type=checkbox id=vehicle2 name=Neptunelike value=Category>
+        <input type=checkbox id=vehicle2>
         <label for=vehicle1>Neptunelike</label>
-        <input type=checkbox id=vehicle1 name=Jupiterlike value=Category>
+        <input type=checkbox id=vehicle1>
         <label for=vehicle1>Jupiterlike</label>
-        <input type=checkbox id=vehicle2 name=HotJupiter value=Category>
+        <input type=checkbox id=vehicle2>
         <label for=vehicle1>Hot Jupiter</label>
-        <input type=checkbox id=vehicle1 name=BrownDwarf value=Category>
+        <input type=checkbox id=vehicle1>
         <label for=vehicle1>Brown Dwarf</label>
-        <input type=checkbox id=vehicle2 name=Habitables value=Category>
+        <input type=checkbox id=vehicle2>
         <label for=vehicle1>Habitables</label>
-        <button type ="button" onclick="GraphRefresh()">Refresh</button>
+        <button type ="button" onclick="ChartRefresh()">Refresh</button>
     </form>
-    <script>
-    //    function GraphRefresh() {
+    <canvas id="PlanetChart" style="width:100%;max-width:600px"></canvas>
+    <form>
+        <input type=checkbox id=vehicle1>
+        <label for=vehicle1>Earthlike</label>
+        <input type=checkbox id=vehicle2>
+        <label for=vehicle1>Super Earth</label>
+        <input type=checkbox id=vehicle1>
+        <label for=vehicle1>Mega Earth</label>
+        <input type=checkbox id=vehicle2>
+        <label for=vehicle1>Neptunelike</label>
+        <input type=checkbox id=vehicle1>
+        <label for=vehicle1>Jupiterlike</label>
+        <input type=checkbox id=vehicle2>
+        <label for=vehicle1>Hot Jupiter</label>
+        <input type=checkbox id=vehicle1>
+        <label for=vehicle1>Brown Dwarf</label>
+        <input type=checkbox id=vehicle2>
+        <label for=vehicle1>Habitables</label>
+        <button type ="button" onclick="ChartRefresh()">Refresh</button>
+    </form>
+    <canvas id="RadiiChart" style="width:100%;max-width:600px;height: 600px"></canvas>
+    <h1>Extra Charts</h1>
+    <canvas id="TelescopeChart" style="width:100%;max-width:500px"></canvas><br>
+    <h1>Applications and Final Notes</h1>
+    <h3>The data presented in these visualisations can be analysed and applied to real life astronomy and planet science. When astronomers search the sky for more exoplanets of a certain type their distribution can be incredibly useful to know when choosing sample sizes. </h3>
+    <h3>You could also use the average radius of the type of exoplanet being searched for to optimise the search. Using the transit method larger radii are more notable when crossing the average star, while smaller radii will be easier seen when passing smaller stars and harder when passing large stars.</h3>
+    <h3>If you wanted to do your own research on exoplanets the 0.95m Kepler Telescope is definitely the best source of data as it provided around 75% of the exoplanetary data used in these visualisations.</h3>
+    <script type="module">
+    
+
+
+    //    function ChartRefresh() {
     //        var show_EL = document.getElementById('EL').checked;
     //        console.log(show_EL)
     //        get(firebaseRef).then(processing);
-    //    }
-    </script>
-    <canvas id="PlanetChart" style="width:100%;max-width:600px"></canvas>
-    <canvas id="TelescopeChart" style="width:100%;max-width:600px"></canvas>
-    <form>
-        <input type=checkbox id=vehicle1 name=Earthlike value=Category id=EL>
-        <label for=vehicle1>Earthlike</label>
-        <input type=checkbox id=vehicle2 name=SuperEarth value=Category>
-        <label for=vehicle1>Super Earth</label>
-        <input type=checkbox id=vehicle1 name=MegaEarth value=Category>
-        <label for=vehicle1>Mega Earth</label>
-        <input type=checkbox id=vehicle2 name=Neptunelike value=Category>
-        <label for=vehicle1>Neptunelike</label>
-        <input type=checkbox id=vehicle1 name=Jupiterlike value=Category>
-        <label for=vehicle1>Jupiterlike</label>
-        <input type=checkbox id=vehicle2 name=HotJupiter value=Category>
-        <label for=vehicle1>Hot Jupiter</label>
-        <input type=checkbox id=vehicle1 name=BrownDwarf value=Category>
-        <label for=vehicle1>Brown Dwarf</label>
-        <input type=checkbox id=vehicle2 name=Habitables value=Category>
-        <label for=vehicle1>Habitables</label>
-        <button type ="button" onclick="GraphRefresh()">Refresh</button>
-    </form>
-    <canvas id="RadiiChart" style="width:100%;max-width:600px"></canvas>
-    <script>document.getElementById("whitetext").style.color = "white";</script>
-    <script type="module">
- 
-    // Import the functions you need from the SDKs you need
+    //    }                                                                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    /////// Importing and Initialising Firebase ///////
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
     apiKey: "AIzaSyAgpnolPXe-wPV0Bi4kr0ZXSwEjQE4rqE4",
     authDomain: "exoplanet-dataset.firebaseapp.com",
@@ -87,34 +93,27 @@
     appId: "1:1061417298619:web:9f73a30d16153b410b579e",
     measurementId: "G-TEVPDM6P9H"
     };
-
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     import { getDatabase, ref, set, get, update, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
     const database = getDatabase(); //This creates a firebase instance
-    // let link_to_database_root = ref(database); //This creates a reference (link) to the root of your database
-    //This will create a reference to whatever address comes after the comma
-    const firebaseRef = ref(database);
+    const firebaseRef = ref(database,"/Analytics");
     
+    /////// Creating Visualisations ///////
     var categories = ["Earthlikes","Super Earths","Mega Earths","Neptunelikes","Jupiterlikes","Hot Jupiters","Brown Dwarfs"];
-    var catcolors = [ 'grey','green', 'yellow',"blue","orange","red","brown"]
-    function processing(snapshot) {
-            console.log('Processing function')
-            console.log(snapshot.size)//number of children in the snapshot
-            snapshot.forEach(function(){console.log('Key =>',snapshot.key); console.log('Value =>',snapshot.val());})
-            let analytics = snapshot.val()["Analytics"];
-            let graphinfo = analytics["Graph_Info"]
-            var graph_radii = graphinfo["Radii"]
-            var telescopes = graphinfo["Telescopes"]
-            var planets = graphinfo["All Planets"]
-            GRAPH_R(graph_radii)
-            GRAPH_T(telescopes)
-            GRAPH_P(planets)
+    var catcolors = [ 'grey','green', 'yellow',"navy","orange","red","brown"]
+    function processing(analytics) {
+            let chartinfo = analytics.val()["Graph_Info"]
+            var chart_radii = chartinfo["Radii"]
+            var telescopes = chartinfo["Telescopes"]
+            var planets = chartinfo["All Planets"]
+            CHART_R(chart_radii)
+            CHART_T(telescopes)
+            CHART_P(planets)
         }
 
-    function GRAPH_R(r) {
-        var xValues = categories;
-        var yValues = r;
+    function CHART_R(r) {
+        var xValues = categories//.push("Earth for Comparison");
+        var yValues = r//.push(1);
         var barColors = catcolors;
 
         new Chart("RadiiChart", {
@@ -127,16 +126,21 @@
             }]
         },
         options: {
+                legend: {
+                labels: {
+                    fontColor: 'white'
+                    }
+                },
                 responsive: true,
                 title: {
                 display: true,
-                text: "Average Radius per Planet Type"
+                text: "Average Radius per Planet Type [showing in earth radii]"
                 }
             } 
     });
     }
 
-    function GRAPH_T(data) {
+    function CHART_T(data) {
         var xValues = data["Names"];
         var yValues = data["Counts"];
         var barColors = ['red',"orange", 'yellow', 'green',"blue","purple",'red',"orange", 'yellow', 'green',"blue","purple"];
@@ -154,13 +158,13 @@
                 responsive: true,
                 title: {
                 display: true,
-                text: "Most Common Telescope Used"
+                text: "Most Common Telescope Used in Dataset"
                 }
             }
         });
     }
 
-    function GRAPH_P(data) {
+    function CHART_P(data) {
         var xValues = categories;
         var yValues = data["Counts"]    ;
         var barColors = catcolors;
@@ -178,7 +182,7 @@
                 responsive: true,
                 title: {
                 display: true,
-                text: "Distribution of Planet Types"
+                text: "Distribution of Planet Types in Dataset"
                 }
             }
         });
@@ -187,4 +191,26 @@
     get(firebaseRef).then(processing);
     </script>
 </body>
+<!--Design and Presentation-->>
+<style>
+    body {
+      background-image: url("https://cdn.hswstatic.com/gif/exoplanets-1.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      color: white;
+    }
+    canvas#PlanetChart {
+    background-color: rgb(255, 255, 255);
+    }
+    canvas#RadiiChart {
+    background-color: rgb(255, 255, 255);
+    }
+    canvas#TelescopeChart {
+    background-color: rgb(255, 255, 255);
+    }
+    marquee {
+    font-size: 100px;
+    }
+</style>
 </html>
