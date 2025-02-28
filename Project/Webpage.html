@@ -1,5 +1,5 @@
-<!Doctype html> 
-<html lang="eng"> 
+<!Doctype html>
+<html lang="eng">
 <head>
     <title>Exoploration</title>
 </head>
@@ -8,7 +8,7 @@
     <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </h1>
     <marquee loop="infinite" height="100px" direction="right">Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration</marquee>
     <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</h1>
-    
+   
     <img src="https://opengameart.org/sites/default/files/earthlike_planet_1-alpha.png" width="85" height="65">
     <img src="https://imgproxy.attic.sh/unsafe/rs:fit:768:768:1:1/t:1:FF00FF:false:false/pngo:false:true:256/aHR0cHM6Ly9hdHRp/Yy5zaC96MXYxaW55/ZjIybnR0eWpyNnpm/aWwwdmNhZ3Vh.png" width="70" height="70">
     <img src="https://www.usatoday.com/gcdn/presto/2018/11/14/USAT/ccf80e0d-c5ce-4b1c-8bf0-54e38a2b64c3-Image-One.png" width="100" height="100">
@@ -16,54 +16,48 @@
     <img src="https://pngimg.com/d/jupiter_PNG5.png" width="300" height="300">
     <img src="https://cdn.pixabay.com/photo/2023/04/18/04/45/cosmos-7934144_640.png" width="275" height="275">
     <img src="https://static.wixstatic.com/media/76c963_90065f6bb0ac4a09ace1d8701db78e91~mv2.png/v1/fill/w_270,h_269,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Star%20Brown%20Dwarf.png" width="400" height="400">
-    
+   
     <!--Display-->
     <H1>Exoplanets</H1>
     <h3>An exoplanet is a planet that resides outside the solar system. Exoplanets are extremely varied; some are 10x bigger than Jupiter, others are smaller than Mercury and some are surprisingly similar to Earth.</h3>
     <h3>This information system is an exploration of exoplanets, their properties and the various types of exoplanets found across the Milky Way.</h3>
     <h3>Most Exoplanets can be categorised into types based off their properties, for example mass. These types are: Earthlikes, Super Earths, Mega Earths, Neptunelikes, Jupiterlikes, Hot Jupiters and Brown Dwarves.</h3>
     <h3>My aim here is to gather data to analyse the trends and contrasts displayed by exoplanet types and to present this on the visualisations found below.</h3>
-    <h1>Interactive Charts</h1>
-    <h2>Choose 1 or more planet categories to chart.</h2>
-    <form id="forms">
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Earthlike</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Super Earth</label>
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Mega Earth</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Neptunelike</label>
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Jupiterlike</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Hot Jupiter</label>
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Brown Dwarf</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Habitables</label>
-        <input type ="submit"  value="Refresh"></input>
+ 
+    <!--Planet Chart-->
+    <h1>Planet Type Distribution Graph</h1>
+    <form id="form1">
+        <input type=checkbox id=EL checked>
+        <label for=EL>Earthlike</label>
+        <input type=checkbox id=SE checked>
+        <label for=SE>Super Earth</label>
+        <input type=checkbox id=ME checked>
+        <label for=ME>Mega Earth</label>
+        <input type=checkbox id=NL checked>
+        <label for=NL>Neptunelike</label>
+        <input type=checkbox id=JL checked>
+        <label for=JL>Jupiterlike</label>
+        <input type=checkbox id=HJ checked>
+        <label for=HJ>Hot Jupiter</label>
+        <input type=checkbox id=BD checked>
+        <label for=BD>Brown Dwarf</label>
     </form>
     <canvas id="PlanetChart" style="width:100%;max-width:600px"></canvas>
-    <form>
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Earthlike</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Super Earth</label>
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Mega Earth</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Neptunelike</label>
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Jupiterlike</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Hot Jupiter</label>
-        <input type=checkbox id=vehicle1>
-        <label for=vehicle1>Brown Dwarf</label>
-        <input type=checkbox id=vehicle2>
-        <label for=vehicle1>Habitables</label>
-        <button type ="button" onclick="ChartRefresh()">Refresh</button>
-    </form>
+    <h2>CHART INFO</h2>
+    <h3>In this chart the planets in the database have all been designated a type and the amount of planets of each type are shown in a pie graph. This pie graph displays how the some types of planets clearly occur more often than others.</h3>
+    <h3>This offers insights into the composition and density of the molecular clouds from which they formed. Planetary formation hence is much more likely to result in a Super Earth type planet than a Brown Dwarf.</h3>
+    <h2>USE OF GRAPH</h2>
+    <h3>Check the checkboxes of the planet types you want to see graphed.</h3><br>
+ 
+    <!--Radii Chart-->
+    <h1>Planet Type Radii Chart</h1>
+    <form id="form2">
+        <label for = "add">Planet type to add to graph:</label>
+        <input type = "text" id = "add"><br>
+        <label for = "remove" > Planet type to remove from graph:</label>
+        <input type = "text " id = "remove"><br>
+        <input type ="submit"  value="Update Graph"></input>
+    </form><br>
     <canvas id="RadiiChart" style="width:100%;max-width:600px;height: 600px"></canvas>
     <h1>Extra Charts</h1>
     <canvas id="TelescopeChart" style="width:100%;max-width:500px"></canvas><br>
@@ -72,8 +66,7 @@
     <h3>You could also use the average radius of the type of exoplanet being searched for to optimise the search. Using the transit method larger radii are more notable when crossing the average star, while smaller radii will be easier seen when passing smaller stars and harder when passing large stars.</h3>
     <h3>If you wanted to do your own research on exoplanets the 0.95m Kepler Telescope is definitely the best source of data as it provided around 75% of the exoplanetary data used in these visualisations.</h3>
     <script type="module">
-
-    
+   
     /////// Importing and Initialising Firebase ///////
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
     const firebaseConfig = {
@@ -90,38 +83,78 @@
     import { getDatabase, ref, set, get, update, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
     const database = getDatabase(); //This creates a firebase instance
     const firebaseRef = ref(database,"/Analytics");
-    
+   
     /////// Creating Visualisations ///////
-    var categories = ["Earthlikes","Super Earths","Mega Earths","Neptunelikes","Jupiterlikes","Hot Jupiters","Brown Dwarfs"];
-    var catcolors = [ 'grey','green', 'yellow',"navy","orange","red","brown"]
+    var categories = ["Earthlikes","Super Earths","Mega Earths","Neptunelikes","Jupiterlikes","Hot Jupiters","Brown Dwarves"];
+    var categorycolours = [ "grey","green", "yellow","navy","orange","red","brown"]
+    var radii_categories = [];
+    var radii_colours = [];
+    var PlanetChart = null;
+    var RadiiChart = null;
     function processing(analytics) {
-            let chartinfo = analytics.val()["Graph_Info"]
-            var chart_radii = chartinfo["Radii"]
-            var telescopes = chartinfo["Telescopes"]
-            var planets = chartinfo["All Planets"]
-            CHART_R(chart_radii)
-            CHART_T(telescopes)
-            CHART_P(planets)
-        }
-
-    function CHART_R(r) {
-        var xValues = categories//.push("Earth for Comparison");
-        var yValues = r//.push(1);
-        var barColors = catcolors;
-
-        new Chart("RadiiChart", {
+            let chartinfo = analytics.val()["Graph_Info"];
+            var chart_radii = chartinfo["Radii"];
+            var telescopes = chartinfo["Telescopes"];
+            var planetcounts = chartinfo["All Planets"]["Counts"];
+ 
+            // For Refresh Functionality
+            var planet_categories = [];
+            var planet_colours = [];
+            let planet_showEL = document.getElementById("EL");
+            planet_showEL = planet_showEL.checked;
+            let planet_showSE = document.getElementById("SE");
+            planet_showSE = planet_showSE.checked;
+            let planet_showME = document.getElementById("ME");
+            planet_showME = planet_showME.checked;
+            let planet_showNL = document.getElementById("NL");
+            planet_showNL = planet_showNL.checked;
+            let planet_showJL = document.getElementById("JL");
+            planet_showJL = planet_showJL.checked;
+            let planet_showHJ = document.getElementById("HJ");
+            planet_showHJ = planet_showHJ.checked;
+            let planet_showBD = document.getElementById("BD");
+            planet_showBD = planet_showBD.checked;
+            let typestestlist = [planet_showEL,planet_showSE,planet_showME,planet_showNL,planet_showJL,planet_showHJ,planet_showBD];
+            let shownplanetcounts = [];
+            for (let index = 0;index < 7;index++){
+                if (typestestlist[index] === true){
+                    planet_categories.push(categories[index])
+                    shownplanetcounts.push(planetcounts[index])
+                    planet_colours.push(categorycolours[index])
+                }
+            };
+ 
+            let radii_using = [];
+            for (let index = 0;index < 7;index++){
+                for (let index2 = 0;index2 < 7;index2++){
+                    if (radii_categories[index] === categories[index2]){
+                        radii_using.push(chart_radii[index2])
+                    }
+            };
+ 
+            CHART_R(radii_using);
+            CHART_T(telescopes);
+            CHART_P(shownplanetcounts,planet_categories,planet_colours);
+        }};
+ 
+    function CHART_R(data) {
+        var xValues = radii_categories;
+        var yValues = data;
+        var barColours = radii_colours;
+ 
+        RadiiChart = new Chart("RadiiChart", {
         type: "bar",
         data: {
             labels: xValues,
             datasets: [{
-            backgroundColor: barColors,
+            backgroundColor: barColours,
             data: yValues
             }]
         },
         options: {
                 legend: {
                 labels: {
-                    fontColor: 'white'
+                    fontColor: "white"
                     }
                 },
                 responsive: true,
@@ -129,21 +162,21 @@
                 display: true,
                 text: "Average Radius per Planet Type [showing in earth radii]"
                 }
-            } 
+            }
     });
     }
-
+ 
     function CHART_T(data) {
         var xValues = data["Names"];
         var yValues = data["Counts"];
-        var barColors = ['red',"orange", 'yellow', 'green',"blue","purple",'red',"orange", 'yellow', 'green',"blue","purple"];
-
+        var barColours = ["red","orange", "yellow", "green","blue","purple","red","orange", "yellow", "green","blue","purple"];
+ 
         new Chart("TelescopeChart", {
             type: "doughnut",
             data: {
                 labels: xValues,
                 datasets: [{
-                backgroundColor: barColors,
+                backgroundColor: barColours,
                 data: yValues
                 }]
             },
@@ -156,18 +189,17 @@
             }
         });
     }
-
-    function CHART_P(data) {
-        var xValues = categories;
-        var yValues = data["Counts"]    ;
-        var barColors = catcolors;
-
-        new Chart("PlanetChart", {
+ 
+    function CHART_P(data,cats,cols) {
+        var xValues = cats;
+        var yValues = data;
+        var barColours = cols;
+        PlanetChart = new Chart("PlanetChart", {
             type: "pie",
             data: {
                 labels: xValues,
                 datasets: [{
-                backgroundColor: barColors,
+                backgroundColor: barColours,
                 data: yValues
                 }]
             },
@@ -179,24 +211,72 @@
                 }
             }
         });
-    }
-
-
+    };
+ 
+ 
     function ChartRefresh(event) {
-        event.preventDefault()
-        console.log("here")
+        if (PlanetChart != null){PlanetChart.destroy()}; // Both randomly stopped working?
+        if (RadiiChart != null){RadiiChart.destroy()};
         get(firebaseRef).then(processing);
-       }            
-    let submission = document.getElementById("forms")
-    submission.addEventListener("submit",ChartRefresh)
-
+       };            
+   
+    function UpdateRadiiData(event){
+        event.preventDefault();
+        let typeadd = document.getElementById("add");
+        typeadd = typeadd.value;
+        let typeremove = document.getElementById("remove");
+        typeremove = typeremove.value;
+        if (categories.includes(typeadd) == true) {
+            if (radii_categories.includes(typeadd)){
+                alert("This type is already on the graph.");
+            }
+            else{
+                radii_categories.push(typeadd);
+                if (typeadd == "Earthlikes"){radii_colours.push("grey")};
+                if (typeadd == "Super Earths"){radii_colours.push("green")};
+                if (typeadd == "Mega Earths"){radii_colours.push("yellow")};
+                if (typeadd == "Neptunelikes"){radii_colours.push("navy")};
+                if (typeadd == "Jupiterlikes"){radii_colours.push("orange")};
+                if (typeadd == "Hot Jupiters"){radii_colours.push("red")};
+                if (typeadd == "Brown Dwarves"){radii_colours.push("brown")};
+            }
+        }
+        else{if (typeadd != ""){
+            alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}}
+        if (categories.includes(typeremove) == true) {
+            if (radii_categories.includes(typeremove)){
+                radii_categories = radii_categories.filter(e => e !== typeremove);
+                if (typeremove == "Earthlikes"){radii_colours.filter(e => e !== "grey")};
+                if (typeremove == "Super Earths"){radii_colours.filter(e => e !== "green")};
+                if (typeremove == "Mega Earths"){radii_colours.filter(e => e !== "yellow")};
+                if (typeremove == "Neptunelikes"){radii_colours.filter(e => e !== "navy")};
+                if (typeremove == "Jupiterlikes"){radii_colours.filter(e => e !== "orange")};
+                if (typeremove == "Hot Jupiters"){radii_colours.filter(e => e !== "red")};
+                if (typeremove == "Brown Dwarves"){radii_colours.filter(e => e !== "brown")};
+            }
+            else{
+                alert("This type is not on the graph.");
+            }
+        }
+        else{
+            if (typeremove != ""){
+            alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}
+        }
+        ChartRefresh()
+    };
+   
+    let categorychange = document.getElementById("form1");
+    categorychange.addEventListener("click",ChartRefresh);
+    let updateradii = document.getElementById("form2");
+    updateradii.addEventListener("submit",UpdateRadiiData);
+ 
     get(firebaseRef).then(processing);
     </script>
 </body>
 <!--Design and Presentation-->>
 <style>
     body {
-      background-image: url("https://cdn.hswstatic.com/gif/exoplanets-1.jpg");
+      background-image: url("mosaic00000.jpg");
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: cover;
