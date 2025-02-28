@@ -5,9 +5,9 @@
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <body>
-    <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </h1>
-    <marquee loop="infinite" height="100px" direction="right">Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration</marquee>
-    <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</h1>
+    <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</h1>
+    <marquee scrollamount=20 loop="infinite" height="100px" direction="right">Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration</marquee>
+    <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </h1>
    
     <img src="https://opengameart.org/sites/default/files/earthlike_planet_1-alpha.png" width="85" height="65">
     <img src="https://imgproxy.attic.sh/unsafe/rs:fit:768:768:1:1/t:1:FF00FF:false:false/pngo:false:true:256/aHR0cHM6Ly9hdHRp/Yy5zaC96MXYxaW55/ZjIybnR0eWpyNnpm/aWwwdmNhZ3Vh.png" width="70" height="70">
@@ -59,12 +59,17 @@
         <input type ="submit"  value="Update Graph"></input>
     </form><br>
     <canvas id="RadiiChart" style="width:100%;max-width:600px;height: 600px"></canvas>
+    <h2>CHART INFO</h2>
+    <h3>TO BE ENTERED</h3>
+    <h2>USE OF GRAPH</h2>
+    <h3>TO BE ENTERED</h3><br>
     <h1>Extra Charts</h1>
     <canvas id="TelescopeChart" style="width:100%;max-width:500px"></canvas><br>
-    <h1>Applications and Final Notes</h1>
-    <h3>The data presented in these visualisations can be analysed and applied to real life astronomy and planet science. When astronomers search the sky for more exoplanets of a certain type their distribution can be incredibly useful to know when choosing sample sizes. </h3>
-    <h3>You could also use the average radius of the type of exoplanet being searched for to optimise the search. Using the transit method larger radii are more notable when crossing the average star, while smaller radii will be easier seen when passing smaller stars and harder when passing large stars.</h3>
-    <h3>If you wanted to do your own research on exoplanets the 0.95m Kepler Telescope is definitely the best source of data as it provided around 75% of the exoplanetary data used in these visualisations.</h3>
+    <h1>Analytical Information Search</h1>
+    <form id="AIS">
+        <input type = "text " id = "remove"><br>
+        <input type ="submit"  value="Submit Question"></input>
+    </form>
     <script type="module">
    
     /////// Importing and Initialising Firebase ///////
@@ -85,21 +90,21 @@
     const firebaseRef = ref(database,"/Analytics");
    
     /////// Creating Visualisations ///////
-    var categories = ["Earthlikes","Super Earths","Mega Earths","Neptunelikes","Jupiterlikes","Hot Jupiters","Brown Dwarves"];
-    var categorycolours = [ "grey","green", "yellow","navy","orange","red","brown"]
-    var radii_categories = [];
-    var radii_colours = [];
-    var PlanetChart = null;
-    var RadiiChart = null;
+    let categories = ["Earthlikes","Super Earths","Mega Earths","Neptunelikes","Jupiterlikes","Hot Jupiters","Brown Dwarves"];
+    let categorycolours = [ "grey","green", "yellow","navy","orange","red","brown"]
+    let radii_categories = [];
+    let radii_colours = [];
+    let PlanetChart = null;
+    let RadiiChart = null;
     function processing(analytics) {
             let chartinfo = analytics.val()["Graph_Info"];
-            var chart_radii = chartinfo["Radii"];
-            var telescopes = chartinfo["Telescopes"];
-            var planetcounts = chartinfo["All Planets"]["Counts"];
+            let chart_radii = chartinfo["Radii"];
+            let telescopes = chartinfo["Telescopes"];
+            let planetcounts = chartinfo["All Planets"]["Counts"];
  
             // For Refresh Functionality
-            var planet_categories = [];
-            var planet_colours = [];
+            let planet_categories = [];
+            let planet_colours = [];
             let planet_showEL = document.getElementById("EL");
             planet_showEL = planet_showEL.checked;
             let planet_showSE = document.getElementById("SE");
@@ -131,46 +136,48 @@
                         radii_using.push(chart_radii[index2])
                     }
             };
- 
             CHART_R(radii_using);
             CHART_T(telescopes);
             CHART_P(shownplanetcounts,planet_categories,planet_colours);
         }};
  
-    function CHART_R(data) {
-        var xValues = radii_categories;
-        var yValues = data;
-        var barColours = radii_colours;
- 
-        RadiiChart = new Chart("RadiiChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColours,
-            data: yValues
-            }]
-        },
-        options: {
-                legend: {
-                labels: {
-                    fontColor: "white"
-                    }
+        function CHART_R(data) {
+        let Chart_Rcanvas = document.createElement("canvas");
+        Chart_Rcanvas.id = "RadiiChart";
+        let xValues = radii_categories;
+        let yValues = data;
+        let barColours = radii_colours;
+        if (RadiiChart == null){
+            RadiiChart = new Chart("RadiiChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                    backgroundColor: barColours,
+                    data: yValues
+                    }]
                 },
-                responsive: true,
-                title: {
-                display: true,
-                text: "Average Radius per Planet Type [showing in earth radii]"
+                options: {
+                    responsive: true,
+                    title: {
+                    display: true,
+                    text: "Average Radius of Planet Types (in terms of earth radii)"
+                    }
                 }
-            }
-    });
-    }
+            })}
+        else{
+            RadiiChart.data.datasets[0].data = yValues;
+            RadiiChart.data.datasets[0].backgroundColor = radii_colours;
+            RadiiChart.data.labels = xValues;
+            RadiiChart.update()
+        }
+    };
  
     function CHART_T(data) {
-        var xValues = data["Names"];
-        var yValues = data["Counts"];
-        var barColours = ["red","orange", "yellow", "green","blue","purple","red","orange", "yellow", "green","blue","purple"];
- 
+        let xValues = data["Names"];
+        let yValues = data["Counts"];
+        let barColours = ["red","orange", "yellow", "green","blue","purple","red","orange", "yellow", "green","blue","purple"];
+        
         new Chart("TelescopeChart", {
             type: "doughnut",
             data: {
@@ -191,34 +198,36 @@
     }
  
     function CHART_P(data,cats,cols) {
-        var xValues = cats;
-        var yValues = data;
-        var barColours = cols;
-        PlanetChart = new Chart("PlanetChart", {
-            type: "pie",
-            data: {
-                labels: xValues,
-                datasets: [{
-                backgroundColor: barColours,
-                data: yValues
-                }]
-            },
-            options: {
-                responsive: true,
-                title: {
-                display: true,
-                text: "Distribution of Planet Types in Dataset"
+        let Chart_Pcanvas = document.createElement("canvas");
+        Chart_Pcanvas.id = "PlanetChart";
+        let xValues = cats;
+        let yValues = data;
+        let barColours = cols;
+        if (PlanetChart == null){
+            PlanetChart = new Chart("PlanetChart", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                    backgroundColor: barColours,
+                    data: yValues
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                    display: true,
+                    text: "Distribution of Planet Types in Dataset"
+                    }
                 }
-            }
-        });
-    };
- 
- 
-    function ChartRefresh(event) {
-        if (PlanetChart != null){PlanetChart.destroy()}; // Both randomly stopped working?
-        if (RadiiChart != null){RadiiChart.destroy()};
-        get(firebaseRef).then(processing);
-       };            
+            })}
+        else{
+            PlanetChart.data.datasets[0].data = yValues;
+            PlanetChart.data.datasets[0].backgroundColor = cols;
+            PlanetChart.data.labels = xValues;
+            PlanetChart.update()
+        }
+    };  
    
     function UpdateRadiiData(event){
         event.preventDefault();
@@ -262,18 +271,18 @@
             if (typeremove != ""){
             alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}
         }
-        ChartRefresh()
+        get(firebaseRef).then(processing)
     };
    
     let categorychange = document.getElementById("form1");
-    categorychange.addEventListener("click",ChartRefresh);
+    categorychange.addEventListener("click",function ChartRefresh(event) {get(firebaseRef).then(processing);});
     let updateradii = document.getElementById("form2");
     updateradii.addEventListener("submit",UpdateRadiiData);
  
     get(firebaseRef).then(processing);
     </script>
 </body>
-<!--Design and Presentation-->>
+<!--Design and Presentation-->
 <style>
     body {
       background-image: url("mosaic00000.jpg");
@@ -283,13 +292,13 @@
       color: white;
     }
     canvas#PlanetChart {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255,0.7);
     }
     canvas#RadiiChart {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255,0.7);
     }
     canvas#TelescopeChart {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255,0.7 );
     }
     marquee {
     font-size: 100px;
