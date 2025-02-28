@@ -136,12 +136,13 @@
                         radii_using.push(chart_radii[index2])
                     }
             };
+            console.log(radii_using);
             CHART_R(radii_using);
             CHART_T(telescopes);
             CHART_P(shownplanetcounts,planet_categories,planet_colours);
         }};
  
-        function CHART_R(data) {
+    function CHART_R(data) {
         let Chart_Rcanvas = document.createElement("canvas");
         Chart_Rcanvas.id = "RadiiChart";
         let xValues = radii_categories;
@@ -149,7 +150,7 @@
         let barColours = radii_colours;
         if (RadiiChart == null){
             RadiiChart = new Chart("RadiiChart", {
-                type: "bar",
+                type: "polarArea",
                 data: {
                     labels: xValues,
                     datasets: [{
@@ -166,9 +167,11 @@
                 }
             })}
         else{
+
             RadiiChart.data.datasets[0].data = yValues;
             RadiiChart.data.datasets[0].backgroundColor = radii_colours;
             RadiiChart.data.labels = xValues;
+            console.log(yValues,radii_colours,xValues);
             RadiiChart.update()
         }
     };
@@ -278,7 +281,17 @@
     categorychange.addEventListener("click",function ChartRefresh(event) {get(firebaseRef).then(processing);});
     let updateradii = document.getElementById("form2");
     updateradii.addEventListener("submit",UpdateRadiiData);
- 
+    
+    /////// Answering Questions ///////
+    function Answer(event){
+        event.preventDefault()
+        let question = document.getElementById("add");
+        question = question.value;
+    }
+
+    let questionsubmit = document.getElementById("AIS")
+    questionsubmit.addEventListener("submit",Answer)
+    
     get(firebaseRef).then(processing);
     </script>
 </body>
