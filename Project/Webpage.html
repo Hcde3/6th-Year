@@ -47,7 +47,7 @@
     <h3>In this chart the planets in the database have all been designated a type and the amount of planets of each type are shown in a pie graph. This pie graph displays how the some types of planets clearly occur more often than others.</h3>
     <h3>This offers insights into the composition and density of the molecular clouds from which they formed. Planetary formation hence is much more likely to result in a Super Earth type planet than a Brown Dwarf.</h3>
     <h2>USE OF GRAPH</h2>
-    <h3>Check the checkboxes of the planet types you want to see graphed.</h3><br>
+    <h3>Check the checkboxes of the planet types you want to see graphed. Hovering over a sector of the pie chart shows the planet type and the number of planets of that type in the dataset.</h3><br>
  
     <!--Radii Chart-->
     <h1>Planet Type Radii Chart</h1>
@@ -60,14 +60,15 @@
     </form><br>
     <canvas id="RadiiChart" style="width:100%;max-width:600px;height: 600px"></canvas>
     <h2>CHART INFO</h2>
-    <h3>TO BE ENTERED</h3>
+    <h3>In this chart the average radius of each planet type in the dataset are compared on a radius graph. The average radius is measured in Earth Radii displaying how many times bigger planet types are than Earth and eachother in a visually intuitive way.</h3>
+    <h3>This clearly presents the disparity between exoplanet types and their sizes and how the size of an exoplanet can be used to estimate its type.</h3>
     <h2>USE OF GRAPH</h2>
-    <h3>TO BE ENTERED</h3><br>
+    <h3>Type in an exoplanet type to be added/removed from the radius graph. Press enter or click the Update Graph button to set changes. Leave a box blank if you dont want to add/remove a type.</h3><br>
     <h1>Extra Charts</h1>
     <canvas id="TelescopeChart" style="width:100%;max-width:500px"></canvas><br>
     <h1>Analytical Information Search</h1>
     <form id="AIS">
-        <input type = "text " id = "remove"><br>
+        <input type = "text " id = "question"><br>
         <input type ="submit"  value="Submit Question"></input>
     </form>
     <script type="module">
@@ -93,10 +94,11 @@
     let categories = ["Earthlikes","Super Earths","Mega Earths","Neptunelikes","Jupiterlikes","Hot Jupiters","Brown Dwarves"];
     let categorycolours = [ "grey","green", "yellow","navy","orange","red","brown"]
     let radii_categories = [];
-    let radii_colours = [];
     let PlanetChart = null;
     let RadiiChart = null;
+    let averages = null
     function processing(analytics) {
+            averages = analytics.val()["Averages"]
             let chartinfo = analytics.val()["Graph_Info"];
             let chart_radii = chartinfo["Radii"];
             let telescopes = chartinfo["Telescopes"];
@@ -128,26 +130,29 @@
                     planet_colours.push(categorycolours[index])
                 }
             };
- 
+
+            let radii_colours = [];
             let radii_using = [];
-            for (let index = 0;index < 7;index++){
+            for (let index = 0;index <= 7;index++){
                 for (let index2 = 0;index2 < 7;index2++){
-                    if (radii_categories[index] === categories[index2]){
+                    if ((radii_categories[index] == categories[index2]) && (index != 7)){
                         radii_using.push(chart_radii[index2])
+                        radii_colours.push(categorycolours[index2])
+                    }
+                    if (index == 7){
+                        CHART_R(radii_using,radii_colours);
                     }
             };
-            console.log(radii_using);
-            CHART_R(radii_using);
             CHART_T(telescopes);
             CHART_P(shownplanetcounts,planet_categories,planet_colours);
         }};
  
-    function CHART_R(data) {
+    function CHART_R(data,cols) {
         let Chart_Rcanvas = document.createElement("canvas");
         Chart_Rcanvas.id = "RadiiChart";
         let xValues = radii_categories;
         let yValues = data;
-        let barColours = radii_colours;
+        let barColours = cols;
         if (RadiiChart == null){
             RadiiChart = new Chart("RadiiChart", {
                 type: "polarArea",
@@ -169,9 +174,8 @@
         else{
 
             RadiiChart.data.datasets[0].data = yValues;
-            RadiiChart.data.datasets[0].backgroundColor = radii_colours;
+            RadiiChart.data.datasets[0].backgroundColor = cols;
             RadiiChart.data.labels = xValues;
-            console.log(yValues,radii_colours,xValues);
             RadiiChart.update()
         }
     };
@@ -238,43 +242,36 @@
         typeadd = typeadd.value;
         let typeremove = document.getElementById("remove");
         typeremove = typeremove.value;
-        if (categories.includes(typeadd) == true) {
-            if (radii_categories.includes(typeadd)){
-                alert("This type is already on the graph.");
+        for (let task = 0; task <= 1; task++){
+            if (task == 0){
+                if (categories.includes(typeadd) == true) {
+                    if (radii_categories.includes(typeadd)){
+                        alert("This type is already on the graph.");
+                    }
+                    else{
+                        radii_categories.push(typeadd);
+                    }
+                }
+                else{if (typeadd != ""){
+                    alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}}
+                if (categories.includes(typeremove) == true) {
+                    if (radii_categories.includes(typeremove)){
+                        radii_categories = radii_categories.filter(e => e !== typeremove);  
+                    }
+                    else{
+                        alert("This type is not on the graph.");
+                    }
+                }
+                else{
+                    if (typeremove != ""){
+                    alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}
+                }
             }
             else{
-                radii_categories.push(typeadd);
-                if (typeadd == "Earthlikes"){radii_colours.push("grey")};
-                if (typeadd == "Super Earths"){radii_colours.push("green")};
-                if (typeadd == "Mega Earths"){radii_colours.push("yellow")};
-                if (typeadd == "Neptunelikes"){radii_colours.push("navy")};
-                if (typeadd == "Jupiterlikes"){radii_colours.push("orange")};
-                if (typeadd == "Hot Jupiters"){radii_colours.push("red")};
-                if (typeadd == "Brown Dwarves"){radii_colours.push("brown")};
+                get(firebaseRef).then(processing)
             }
+
         }
-        else{if (typeadd != ""){
-            alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}}
-        if (categories.includes(typeremove) == true) {
-            if (radii_categories.includes(typeremove)){
-                radii_categories = radii_categories.filter(e => e !== typeremove);
-                if (typeremove == "Earthlikes"){radii_colours.filter(e => e !== "grey")};
-                if (typeremove == "Super Earths"){radii_colours.filter(e => e !== "green")};
-                if (typeremove == "Mega Earths"){radii_colours.filter(e => e !== "yellow")};
-                if (typeremove == "Neptunelikes"){radii_colours.filter(e => e !== "navy")};
-                if (typeremove == "Jupiterlikes"){radii_colours.filter(e => e !== "orange")};
-                if (typeremove == "Hot Jupiters"){radii_colours.filter(e => e !== "red")};
-                if (typeremove == "Brown Dwarves"){radii_colours.filter(e => e !== "brown")};
-            }
-            else{
-                alert("This type is not on the graph.");
-            }
-        }
-        else{
-            if (typeremove != ""){
-            alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}
-        }
-        get(firebaseRef).then(processing)
     };
    
     let categorychange = document.getElementById("form1");
@@ -285,8 +282,36 @@
     /////// Answering Questions ///////
     function Answer(event){
         event.preventDefault()
-        let question = document.getElementById("add");
+        let question = document.getElementById("question");
         question = question.value;
+        if (question.slice(0,28) == "On average how far away are "){
+            let type = question.slice(28,-1);
+            if (categories.includes(type + "s")){
+                if (type == "Brown Dwarve"){ type = "Brown Dwarf" }
+                let dist = averages[type]["sy_dist"]
+                alert(Math.round(dist) + " Parsecs")
+            }
+        }
+        if (question.slice(0,28) == "On average how far away are "){
+            let type = question.slice(28,-1);
+            if (categories.includes(type + "s")){
+                if (type == "Brown Dwarve"){ type = "Brown Dwarf" }
+                let dist = averages[type]["sy_dist"]
+                alert(Math.round(dist) + " Parsecs")
+            }
+        }
+        if (question.slice(0,35) == "On average how long is the year on "){
+            let type = question.slice(35,-1);
+            if (categories.includes(type + "s")){
+                if (type == "Brown Dwarve"){ type = "Brown Dwarf" }
+                let year = averages[type]["pl_orbper"]
+                alert(Math.round(year) + " Days")
+            }
+        }
+        else{
+            console.log(question.length);
+            
+        }
     }
 
     let questionsubmit = document.getElementById("AIS")

@@ -18,8 +18,8 @@
     <h2>Experience in Astronomy</h2>
     <input type = "checkbox" id = "choice1" name = "choice1" checked>
     <label for = "choice1" >Do you have an interest in Astronomy?</label><br> 
-    <input type = "checkbox" id ="choice2" name = "interest" checked>
-    <label for = "choice2" >Did you know of Exoplanets?</label><br>
+    <input type = "checkbox" id ="choice2" name = "interest" value = "Car" checked>
+    <label for = "vehicle2" >Did you know of Exoplanets?</label><br>
 
     <h2>Favourite Space Agency</h2>
     <select  id="agency">
@@ -36,7 +36,7 @@
 <br><br><br>
 <canvas id="InterestChart" style="width:50%;max-width:600px;float: left;"></canvas>
 <canvas id="KnownChart" style="width:50%;max-width:600px;float: left;"></canvas>
-<canvas id="AgencyChart" style="width:100%;max-width:1200px;height: 600px;float: left;"></canvas>
+<canvas id="AgencyChart" style="width:100%;max-width:1000px;height: 600px;float: left;"></canvas>
 
 <script type="module">
 
@@ -73,7 +73,6 @@
         let agencyinput = document.getElementById("agency");
         let agencyData = agencyinput.value;
         let surveydata = {"userName":firstnameData, "usersurname":surnameData, "userAge":NumberAgeInput, "interested":interestData, "known":knownData, "favourite agency":agencyData};
-        console.log("here")
         if ((firstnameData != "" ) && (surnameData != "")){ //Validating entry by checking if a name has been input
         push(firebaseRef, surveydata )}
     }
@@ -112,7 +111,6 @@
             let count = 0
             for (var answers in fbcontents) {
                 ++ count;
-                console.log(count)
                 answers = fbcontents[answers];
                 let astrointerest = answers["interested"];
                 let known = answers["known"];
@@ -138,7 +136,7 @@
                 else if (agency === "SpaceX"){
                     sa_distribution[2] = sa_distribution[2] + 1
                 }
-                else{
+                else if (agency === "China National Space Administration (CNSA)"){
                     sa_distribution[3] = sa_distribution[3] + 1
                 };
                 if (count == entryamt){
@@ -153,7 +151,6 @@
     
     // Astronomy Interest Pie Chart
     function Chart_I(dis) {
-        console.log(dis)
         var xValues = ["Yes","No"];
         var yValues = dis;
         var barColours = ["green","red"];
@@ -179,7 +176,6 @@
 
     // Exoplanet Knowledge Pie Chart
     function Chart_K(dis) {
-        console.log(dis)
         var xValues = ["Yes","No"];
         var yValues = dis;
         var barColours = ["green","red"];
@@ -205,8 +201,7 @@
 
     // Popularity of Agencies Bar Chart
     function Chart_A(dis) {
-        console.log(dis)
-        var xValues = ["ESA","NASA","SpaceX","CNSA"];
+        var xValues = ["ESA","NASA","SpaceX","CNSA"];     
         var yValues = dis;
         var barColours = ["blue","orange","green","maroon"];
 
@@ -238,7 +233,7 @@
 </script>
 </body>
 
-<!--Design and Presentation-->
+<!--Design and Presentation-->>
 <style>
     body {
       background-image: url("mosaic00006.jpg");
@@ -248,13 +243,13 @@
       color: white;
     }
     canvas#AgencyChart {
-    background-color: rgb(255, 255, 255,0.7);
+    background-color: rgb(255, 255, 255);
     }
     canvas#InterestChart {
-    background-color: rgb(255, 255, 255,0.7);
+    background-color: rgb(255, 255, 255);
     }
     canvas#KnownChart {
-    background-color: rgb(255, 255, 255,0.7);
+    background-color: rgb(255, 255, 255);
     }
 </style>
 </html>
