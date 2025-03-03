@@ -52,10 +52,28 @@
     <!--Radii Chart-->
     <h1>Planet Type Radii Chart</h1>
     <form id="form2">
-        <label for = "add">Planet type to add to graph:</label>
-        <input type = "text" id = "add"><br>
-        <label for = "remove" > Planet type to remove from graph:</label>
-        <input type = "text " id = "remove"><br>
+        <h3>Add to Graph</h2>
+        <select  id="add">
+            <option>None</option>
+            <option>Earthlikes</option>
+            <option>Super Earths</option>
+            <option>Mega Earths</option>
+            <option>Neptunelikes</option>
+            <option>Jupiterlikes</option>
+            <option>Hot Jupiters</option>
+            <option>Brown Dwarves</option>
+        </select>
+        <h3>Remove from Graph</h2>
+        <select  id="remove">
+            <option>None</option>
+            <option>Earthlikes</option>
+            <option>Super Earths</option>
+            <option>Mega Earths</option>
+            <option>Neptunelikes</option>
+            <option>Jupiterlikes</option>
+            <option>Hot Jupiters</option>
+            <option>Brown Dwarves</option>
+        </select><br><br>
         <input type ="submit"  value="Update Graph"></input>
     </form><br>
     <canvas id="RadiiChart" style="width:100%;max-width:600px;height: 600px"></canvas>
@@ -68,7 +86,21 @@
     <canvas id="TelescopeChart" style="width:100%;max-width:500px"></canvas><br>
     <h1>Analytical Information Search</h1>
     <form id="AIS">
-        <input type = "text " id = "question"><br>
+        <h3>On average:</h3>
+        <select  id="property">
+            <option>how far away is a...</option>
+            <option>how long is the year on a...</option>
+            <option>how massive is a...</option>
+        </select>
+        <select  id="catabt">
+            <option>Earthlike</option>
+            <option>Super Earth</option>
+            <option>Mega Earth</option>
+            <option>Neptunelike</option>
+            <option>Jupiterlike</option>
+            <option>Hot Jupiter</option>
+            <option>Brown Dwarf</option>
+        </select><br>   
         <input type ="submit"  value="Submit Question"></input>
     </form>
     <script type="module">
@@ -167,7 +199,7 @@
                     responsive: true,
                     title: {
                     display: true,
-                    text: "Average Radius of Planet Types (in terms of earth radii)"
+                    text: "Average Radius Length (Earth Radians / R🜨)"
                     }
                 }
             })}
@@ -252,7 +284,7 @@
                         radii_categories.push(typeadd);
                     }
                 }
-                else{if (typeadd != ""){
+                else{if (typeadd != "None"){
                     alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}}
                 if (categories.includes(typeremove) == true) {
                     if (radii_categories.includes(typeremove)){
@@ -263,7 +295,7 @@
                     }
                 }
                 else{
-                    if (typeremove != ""){
+                    if (typeremove != "None"){
                     alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}
                 }
             }
@@ -282,34 +314,23 @@
     /////// Answering Questions ///////
     function Answer(event){
         event.preventDefault()
-        let question = document.getElementById("question");
-        question = question.value;
-        if (question.slice(0,28) == "On average how far away are "){
-            let type = question.slice(28,-1);
-            if (categories.includes(type + "s")){
-                if (type == "Brown Dwarve"){ type = "Brown Dwarf" }
-                let dist = averages[type]["sy_dist"]
-                alert(Math.round(dist) + " Parsecs")
+        let question = document.getElementById("property").value;
+        let type = document.getElementById("catabt").value;
+        if (type == "Brown Dwarves"){ type = "Brown Dwarf" }
+        if (question == "how far away is a..."){
+            let dist = averages[type]["sy_dist"]
+            alert(Math.round(dist) + " Parsecs")
             }
-        }
-        if (question.slice(0,28) == "On average how far away are "){
-            let type = question.slice(28,-1);
-            if (categories.includes(type + "s")){
-                if (type == "Brown Dwarve"){ type = "Brown Dwarf" }
-                let dist = averages[type]["sy_dist"]
-                alert(Math.round(dist) + " Parsecs")
+        if (question == "how massive is a..."){
+                let dist = averages[type]["pl_bmasse"]*6
+                alert(Math.round(dist) + "x10^24 kg")
             }
-        }
-        if (question.slice(0,35) == "On average how long is the year on "){
-            let type = question.slice(35,-1);
-            if (categories.includes(type + "s")){
-                if (type == "Brown Dwarve"){ type = "Brown Dwarf" }
+        if (question == "how long is the year on a..."){
                 let year = averages[type]["pl_orbper"]
                 alert(Math.round(year) + " Days")
             }
-        }
         else{
-            console.log(question.length);
+            console.log(question);
             
         }
     }
