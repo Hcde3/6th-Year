@@ -5,12 +5,15 @@
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <body>
+    <div class="navbar">
+        <a class="active" href="file:///C:/Users/19HDaniel.ACC/Documents/firebase/project/Webpage.html">Home</a>
+        <a href="file:///C:/Users/19HDaniel.ACC/Documents/firebase/project/form.html">Survey</a>
+        <a href="file:///C:/Users/19HDaniel.ACC/Documents/firebase/project/Webpage.html">Search</a>
+    </div>
     <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</h1>
     <marquee scrollamount=20 loop="infinite" height="100px" direction="right">Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration-------Exoploration</marquee>
     <h1>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </h1>
-    <ul>
-        <li>Find my Survey at </li><a href="file:///C:/Users/19HDaniel.ACC/Documents/firebase/project/form.html">this website.</a>
-    </ul>
+
     <img src="https://opengameart.org/sites/default/files/earthlike_planet_1-alpha.png" width="85" height="65">
     <img src="https://imgproxy.attic.sh/unsafe/rs:fit:768:768:1:1/t:1:FF00FF:false:false/pngo:false:true:256/aHR0cHM6Ly9hdHRp/Yy5zaC96MXYxaW55/ZjIybnR0eWpyNnpm/aWwwdmNhZ3Vh.png" width="70" height="70">
     <img src="https://www.usatoday.com/gcdn/presto/2018/11/14/USAT/ccf80e0d-c5ce-4b1c-8bf0-54e38a2b64c3-Image-One.png" width="100" height="100">
@@ -87,16 +90,14 @@
     <h1>Telescope Chart</h1>
     <h3>This Doughnut graph shows the proportion of the exoplanets in the dataset that were collected by each telescope.</h3>
     <canvas id="TelescopeChart" style="width:100%;max-width:500px"></canvas><br>
+
+    <!--Information Search-->
     <h1>Analytical Information Search</h1>
+    <img src="https://static.vecteezy.com/system/resources/previews/033/170/280/non_2x/magnifier-and-globe-icon-search-for-a-place-on-a-map-or-on-the-globe-icon-the-icon-of-the-magnifying-glass-and-planet-earth-vector.jpg" width="85" height="85"><br>
     <h3>This section is to further educate on the specifics of these planet types. Each question configuration will provide an accurate answer based off the data in the database.</h3>
     <h3>Once the desired configuration is made click the Submit Question button to get the answer.</h3>
-    <span>On average </span>
-    <select  id="property" style="display: inline;">
-        <option>how far away is a...</option>
-        <option>how long is the year on a...</option>
-        <option>how massive is a...</option>
-    </select>
-    <select  id="catabt">
+    <span>How far away is the average </span>
+    <select id="distance">
         <option>Earthlike</option>
         <option>Super Earth</option>
         <option>Mega Earth</option>
@@ -105,9 +106,33 @@
         <option>Hot Jupiter</option>
         <option>Brown Dwarf</option>
     </select>
-    <span>planet</span><br><br>
-    <img src="https://static.vecteezy.com/system/resources/previews/033/170/280/non_2x/magnifier-and-globe-icon-search-for-a-place-on-a-map-or-on-the-globe-icon-the-icon-of-the-magnifying-glass-and-planet-earth-vector.jpg" width="85" height="85"><br>
-    <input type ="submit" id="AIS" value="Submit Question"></input><br> 
+    <span>planet</span>
+    <p id="dist_ans"></p><br><br>
+    <span>How massive is the average </span>
+    <select id="mass">
+        <option>Earthlike</option>
+        <option>Super Earth</option>
+        <option>Mega Earth</option>
+        <option>Neptunelike</option>
+        <option>Jupiterlike</option>
+        <option>Hot Jupiter</option>
+        <option>Brown Dwarf</option>
+    </select>
+    <span>planet</span>
+    <p id="mass_ans"></p><br><br>
+    <span>How long is the year on the average </span>
+    <select id="year">
+        <option>Earthlike</option>
+        <option>Super Earth</option>
+        <option>Mega Earth</option>
+        <option>Neptunelike</option>
+        <option>Jupiterlike</option>
+        <option>Hot Jupiter</option>
+        <option>Brown Dwarf</option>
+    </select>
+    <span>planet</span>
+    <p id="year_ans"></p><br><br>
+    <input type ="submit" id="AIS" value="Submit Questions"></input><br> 
     <script type="module">
    
     /////// Importing and Initialising Firebase ///////
@@ -258,10 +283,18 @@
                     }]
                 },
                 options: {
-                    responsive: true,
+                    plugins: {
+                    legend: {
+                            display: false
+                        },
                     title: {
-                    display: true,
-                    text: "Distribution of Planet Types in Dataset"
+                        display: true,
+                        text: "Distribution of Planet Types in Dataset"
+                        },
+                    responsive: true,
+                    },
+                    tootltips: {
+                        enabled: false
                     }
                 }
             })}
@@ -318,27 +351,18 @@
     
     /////// Answering Questions ///////
     function Answer(event){
-        event.preventDefault()
-        let question = document.getElementById("property").value;
-        let type = document.getElementById("catabt").value;
-        if (type == "Brown Dwarves"){ type = "Brown Dwarf" }
-        if (question == "how far away is a..."){
-            let dist = averages[type]["sy_dist"]
-            alert(Math.round(dist) + " Parsecs")
-            }
-        if (question == "how massive is a..."){
-                let dist = averages[type]["pl_bmasse"]*6
-                alert(Math.round(dist) + "x10^24 kg")
-            }
-        if (question == "how long is the year on a..."){
-                let year = averages[type]["pl_orbper"]
-                alert(Math.round(year) + " Days")
-            }
-        else{
-            console.log(question);
-            
+        event.preventDefault();
+        let dist_type = document.getElementById("distance").value;
+        let year_type = document.getElementById("year").value;
+        let mass_type = document.getElementById("mass").value;
+        let dist = averages[dist_type]["sy_dist"]
+        document.getElementById("dist_ans").innerHTML = "The average " + dist_type + " planet is " + Math.round(dist) + " Parsecs away."
+        let mass = averages[mass_type]["pl_bmasse"]*6
+        document.getElementById("mass_ans").innerHTML = "The average mass of a " + mass_type + " planet is " + Math.round(mass) + "x10^24 kg"
+        let year = averages[year_type]["pl_orbper"]
+        document.getElementById("year_ans").innerHTML = "The average year on a " + year_type + " planet is " + Math.round(year) + " days long"
         }
-    }
+
 
     let questionsubmit = document.getElementById("AIS")
     questionsubmit.addEventListener("click",Answer)
@@ -366,6 +390,30 @@
     }
     marquee {
     font-size: 100px;
+    }
+
+    .navbar {
+    background-color: rgb(233, 233, 233);    
+    overflow: hidden;
+    }
+
+    .navbar a {
+    float: left;
+    color: #4d4d4d;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+
+    .navbar a:hover {
+    background-color: rgb(255, 251, 0);
+    color: black;
+    }
+
+    .navbar a.active {
+    background-color: #ffad14;
+    color: white;
     }
 </style>
 </html>

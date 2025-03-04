@@ -2,6 +2,10 @@
 <html>
 <head><title>Astronomy Survey</title></head>
 <body>
+<div class="navbar">
+    <a href="file:///C:/Users/19HDaniel.ACC/Documents/firebase/project/Webpage.html">Home</a>
+    <a class="active" href="file:///C:/Users/19HDaniel.ACC/Documents/firebase/project/form.html">Survey</a>
+</div>
 <h1>Astronomy Survey</h1>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
@@ -250,6 +254,30 @@
     }
     canvas#KnownChart {
     background-color: rgb(255, 255, 255, 0.7);
+    }
+
+    .navbar {
+    background-color: rgb(233, 233, 233);    
+    overflow: hidden;
+    }
+
+    .navbar a {
+    float: left;
+    color: #4d4d4d;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+
+    .navbar a:hover {
+    background-color: rgb(255, 251, 0);
+    color: black;
+    }
+
+    .navbar a.active {
+    background-color: #ffad14;
+    color: white;
     }
 </style>
 </html>
