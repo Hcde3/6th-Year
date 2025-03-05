@@ -314,29 +314,19 @@
         typeremove = typeremove.value;
         for (let task = 0; task <= 1; task++){
             if (task == 0){
-                if (categories.includes(typeadd) == true) {
-                    if (radii_categories.includes(typeadd)){
-                        alert("This type is already on the graph.");
+                if (radii_categories.includes(typeadd)){
+                    alert("This type is already on the graph.");
                     }
-                    else{
-                        radii_categories.push(typeadd);
-                    }
-                }
-                else{if (typeadd != "None"){
-                    alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}}
-                if (categories.includes(typeremove) == true) {
-                    if (radii_categories.includes(typeremove)){
-                        radii_categories = radii_categories.filter(e => e !== typeremove);  
-                    }
-                    else{
-                        alert("This type is not on the graph.");
-                    }
-                }
                 else{
-                    if (typeremove != "None"){
-                    alert("One or more inputs are not a correct type. Please ensure to use proper capitalisation and spacing. Refer to types stated above to see valid entries.");}
+                    if (typeadd != "None"){radii_categories.push(typeadd)};
+                    };
+                if (radii_categories.includes(typeremove)){
+                    radii_categories = radii_categories.filter(e => e !== typeremove);  
+                    }
+                else{
+                    if (typeremove != "None"){alert("This type is already on the graph.")};
+                    };
                 }
-            }
             else{
                 get(firebaseRef).then(processing)
             }
