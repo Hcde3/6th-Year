@@ -13,9 +13,9 @@
 <form id = "data">
     <h2>Personal Details</h2>
     <label for = "fname">First name</label> 
-    <input type = "text" id = "fname" name ="fname"><br>
+    <input type = "text" id = "fname" name ="fname" required><br>
     <label for = "lname" > Last name</label>
-    <input type = "text " id = "lname" name=" lname"><br> 
+    <input type = "text " id = "lname" name=" lname" required><br>  
     <label for = "age">Age:</label>
     <input type="number" id = "age" required><br> 
 
@@ -70,15 +70,14 @@
         let text2input = document.getElementById("lname")
         let surnameData = text2input.value;
         let NumberAgeInput = document.getElementById("age").value
-            let interestinput = document.getElementById("choice1")
-            let interestData = interestinput.checked;
-            let knowninput = document.getElementById("choice2")
-            let knownData = knowninput.checked;
+        let interestinput = document.getElementById("choice1")
+        let interestData = interestinput.checked;
+        let knowninput = document.getElementById("choice2")
+        let knownData = knowninput.checked;
         let agencyinput = document.getElementById("agency");
         let agencyData = agencyinput.value;
         let surveydata = {"userName":firstnameData, "usersurname":surnameData, "userAge":NumberAgeInput, "interested":interestData, "known":knownData, "favourite agency":agencyData};
-        if ((firstnameData != "" ) && (surnameData != "")){ //Validating entry by checking if a name has been input
-        push(firebaseRef, surveydata )}
+        push(firebaseRef, surveydata )
     }
 
     /////// Charts ///////
