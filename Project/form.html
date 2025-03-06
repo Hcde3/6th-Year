@@ -17,12 +17,12 @@
     <label for = "lname" > Last name</label>
     <input type = "text " id = "lname" name=" lname"><br> 
     <label for = "age">Age:</label>
-    <input type="number" id = "age" name = "age" required  placeholder="YYYY"><br> 
+    <input type="number" id = "age" required><br> 
 
     <h2>Experience in Astronomy</h2>
-    <input type = "checkbox" id = "choice1" name = "choice1" checked>
+    <input type = "checkbox" id = "choice1" checked>
     <label for = "choice1" >Do you have an interest in Astronomy?</label><br> 
-    <input type = "checkbox" id ="choice2" name = "interest" value = "Car" checked>
+    <input type = "checkbox" id ="choice2" checked>
     <label for = "vehicle2" >Did you know of Exoplanets?</label><br>
 
     <h2>Favourite Space Agency</h2>
@@ -70,10 +70,10 @@
         let text2input = document.getElementById("lname")
         let surnameData = text2input.value;
         let NumberAgeInput = document.getElementById("age").value
-        let interestinput = document.getElementById("choice1")
-        let interestData = interestinput.checked;
-        let knowninput = document.getElementById("choice2")
-        let knownData = knowninput.checked;
+            let interestinput = document.getElementById("choice1")
+            let interestData = interestinput.checked;
+            let knowninput = document.getElementById("choice2")
+            let knownData = knowninput.checked;
         let agencyinput = document.getElementById("agency");
         let agencyData = agencyinput.value;
         let surveydata = {"userName":firstnameData, "usersurname":surnameData, "userAge":NumberAgeInput, "interested":interestData, "known":knownData, "favourite agency":agencyData};
