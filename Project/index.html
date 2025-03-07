@@ -161,7 +161,7 @@
     let PlanetChart = null;
     let RadiiChart = null;
     let averages = null
-    function processing(analytics) {
+    function startup(analytics) {
             averages = analytics.val()["Averages"]
             let chartinfo = analytics.val()["Graph_Info"];
             let chart_radii = chartinfo["Radii"];
@@ -173,20 +173,13 @@
             // For Refresh Functionality
             let planet_categories = [];
             let planet_colours = [];
-            let planet_showEL = document.getElementById("EL");
-            planet_showEL = planet_showEL.checked;
-            let planet_showSE = document.getElementById("SE");
-            planet_showSE = planet_showSE.checked;
-            let planet_showME = document.getElementById("ME");
-            planet_showME = planet_showME.checked;
-            let planet_showNL = document.getElementById("NL");
-            planet_showNL = planet_showNL.checked;
-            let planet_showJL = document.getElementById("JL");
-            planet_showJL = planet_showJL.checked;
-            let planet_showHJ = document.getElementById("HJ");
-            planet_showHJ = planet_showHJ.checked;
-            let planet_showBD = document.getElementById("BD");
-            planet_showBD = planet_showBD.checked;
+            let planet_showEL = document.getElementById("EL").checked;
+            let planet_showSE = document.getElementById("SE").checked;
+            let planet_showME = document.getElementById("ME").checked;
+            let planet_showNL = document.getElementById("NL").checked;
+            let planet_showJL = document.getElementById("JL").checked;
+            let planet_showHJ = document.getElementById("HJ").checked;
+            let planet_showBD = document.getElementById("BD").checked;
             let typestestlist = [planet_showEL,planet_showSE,planet_showME,planet_showNL,planet_showJL,planet_showHJ,planet_showBD];
             let shownplanetcounts = [];
             for (let index = 0;index < 7;index++){
@@ -354,18 +347,18 @@
                     radii_categories = radii_categories.filter(e => e !== typeremove);  
                     }
                 else{
-                    if (typeremove != "None"){alert("This type is already on the graph.")};
+                    if (typeremove != "None"){alert("This type is not on the graph.")};
                     };
                 }
             else{
-                get(firebaseRef).then(processing)
+                get(firebaseRef).then(startup)
             }
 
         }
     };
    
     let categorychange = document.getElementById("form1");
-    categorychange.addEventListener("click",function ChartRefresh(event) {get(firebaseRef).then(processing);});
+    categorychange.addEventListener("click",function ChartRefresh(event) {get(firebaseRef).then(startup);});
     let updateradii = document.getElementById("form2");
     updateradii.addEventListener("submit",UpdateRadiiData);
     
@@ -387,7 +380,7 @@
     let questionsubmit = document.getElementById("AIS")
     questionsubmit.addEventListener("click",Answer)
     
-    get(firebaseRef).then(processing);
+    get(firebaseRef).then(startup);
     </script>
 </body>
 <!--Design and Presentation-->

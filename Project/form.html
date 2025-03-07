@@ -13,17 +13,17 @@
 <form id = "data">
     <h2>Personal Details</h2>
     <label for = "fname">First name</label> 
-    <input type = "text" id = "fname" name ="fname" required><br>
-    <label for = "lname" > Last name</label>
-    <input type = "text " id = "lname" name=" lname" required><br>  
+    <input type = "text" id = "fname" required><br>
+    <label for = "sname" > Last name</label>
+    <input type = "text " id = "sname" required><br>  
     <label for = "age">Age:</label>
     <input type="number" id = "age" required><br> 
 
     <h2>Experience in Astronomy</h2>
-    <input type = "checkbox" id = "choice1" checked>
-    <label for = "choice1" >Do you have an interest in Astronomy?</label><br> 
-    <input type = "checkbox" id ="choice2" checked>
-    <label for = "vehicle2" >Did you know of Exoplanets?</label><br>
+    <input type = "checkbox" id = "interestcheck" checked>
+    <label for = "interestcheck" >Do you have an interest in Astronomy?</label><br> 
+    <input type = "checkbox" id ="knowledgecheck" checked>
+    <label for = "knowledgecheck" >Did you know of Exoplanets?</label><br>
 
     <h2>Favourite Space Agency</h2>
     <select  id="agency">
@@ -65,18 +65,13 @@
     let data = document.getElementById("data")
     data.addEventListener("submit",sendtofirebase)
     function sendtofirebase(event){
-        let textinput = document.getElementById("fname")
-        let firstnameData = textinput.value;
-        let text2input = document.getElementById("lname")
-        let surnameData = text2input.value;
-        let NumberAgeInput = document.getElementById("age").value
-        let interestinput = document.getElementById("choice1")
-        let interestData = interestinput.checked;
-        let knowninput = document.getElementById("choice2")
-        let knownData = knowninput.checked;
-        let agencyinput = document.getElementById("agency");
-        let agencyData = agencyinput.value;
-        let surveydata = {"userName":firstnameData, "usersurname":surnameData, "userAge":NumberAgeInput, "interested":interestData, "known":knownData, "favourite agency":agencyData};
+        let fnameinput = document.getElementById("fname").value;
+        let snameinput = document.getElementById("sname").value;
+        let ageinput = document.getElementById("age").value
+        let interestinput = document.getElementById("interestcheck").checked;
+        let knowninput = document.getElementById("knowledgecheck").checked;
+        let agencyinput = document.getElementById("agency").value;
+        let surveydata = {"userName":fnameinput, "usersurname":surnameData, "userAge":ageinput, "interested":interestinput, "known":knowninput, "favourite agency":agencyinput};
         push(firebaseRef, surveydata )
     }
 
@@ -103,7 +98,7 @@
         plugins: [custom_canvas_background_color],
     };
 
-    function processing(fbcontents) {
+    function startup(fbcontents) {
             let entryamt = fbcontents.size;
             fbcontents = fbcontents.val() 
 
@@ -230,7 +225,7 @@
             } 
     )}
 
-    get(firebaseRef).then(processing);
+    get(firebaseRef).then(startup);
 </script>
 </body>
 
