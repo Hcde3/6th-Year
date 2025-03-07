@@ -89,11 +89,14 @@
     <h1>Telescope Chart</h1>
     <h3>This Doughnut graph shows the proportion of the exoplanets in the dataset that were collected by each telescope.</h3>
     <canvas id="TelescopeChart" style="width:100%;max-width:500px"></canvas><br>
+    <h1>Terrestrial Planet Radius to Mass Ratio Chart</h1>
+    <h3>This Scatter plot shows the ratio of mass to radius for terrestrial exoplanets (Earthlike, Super Earth, Mega Earth). A very clear trend is shown indicating that there is a close link between the mass and radius of an exoplanet</h3>
+    <canvas id="TerrestrialRatioChart" style="width:100%;max-width:1000px"></canvas><br>
 
     <!--Information Search-->
     <h1>Analytical Information Search</h1>
     <img src="https://static.vecteezy.com/system/resources/previews/033/170/280/non_2x/magnifier-and-globe-icon-search-for-a-place-on-a-map-or-on-the-globe-icon-the-icon-of-the-magnifying-glass-and-planet-earth-vector.jpg" width="85" height="85"><br>
-    <h3>This section is to further educate on the specifics of these planet types. Each question configuration will provide an accurate answer based off the data in the database.</h3>
+    <h3>This section is to further educate on the specifics of these planet types. Each question configuration will provide an accurate answer based off the data in the database. Average distance, mass and year length of an exoplanet type are all vital information for any astronomer searching for new exoplanets.</h3>
     <h3>Once the desired configuration is made click the Submit Question button to get the answer.</h3>
     <span>How far away is the average </span>
     <select id="distance">
@@ -164,6 +167,8 @@
             let chart_radii = chartinfo["Radii"];
             let telescopes = chartinfo["Telescopes"];
             let planetcounts = chartinfo["All Planets"]["Counts"];
+            let terrestrialradii = chartinfo["Radius to Mass Ratio"]["Radii"];
+            let terrestrialmasses = chartinfo["Radius to Mass Ratio"]["Masses"];
  
             // For Refresh Functionality
             let planet_categories = [];
@@ -206,6 +211,7 @@
             };
             CHART_T(telescopes);
             CHART_P(shownplanetcounts,planet_categories,planet_colours);
+            CHART_MR(terrestrialmasses,terrestrialradii);
         }};
  
     function CHART_R(data,cols) {
@@ -225,6 +231,9 @@
                     }]
                 },
                 options: {
+                    legend: {
+                        display: false
+                    },
                     responsive: true,
                     title: {
                     display: true,
@@ -264,6 +273,33 @@
             }
         });
     }
+
+    function CHART_MR(masses,radii) {
+        let data_amt = masses.length;
+        let data = [];     
+        for (let index = 0;index < data_amt;++index){
+            data.push({x:masses[index],y:radii[index]});
+            ++ index;
+        };
+        
+        new Chart("TerrestrialRatioChart", {
+            type: "scatter",
+            data: {
+                datasets: [{
+                data: data,
+                }]
+            },
+            options: {
+                legend: {
+                        display: false
+                },
+                title: {
+                display: true,
+                text: "Terrestrial Exoplanet Radius to Mass Ratio"
+                }
+            }
+        });
+    }
  
     function CHART_P(data,cats,cols) {
         let Chart_Pcanvas = document.createElement("canvas");
@@ -282,19 +318,14 @@
                     }]
                 },
                 options: {
-                    plugins: {
-                    legend: {
-                            display: false
-                        },
                     title: {
                         display: true,
                         text: "Distribution of Planet Types in Dataset"
-                        },
-                    responsive: true,
                     },
-                    tootltips: {
-                        enabled: false
-                    }
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
                 }
             })}
         else{
@@ -377,6 +408,11 @@
     canvas#TelescopeChart {
     background-color: rgb(255, 255, 255,0.7 );
     }
+    canvas#TerrestrialRatioChart {
+    background-color: rgb(255, 255, 255,0.7 );
+    }
+    
+
     marquee {
     font-size: 100px;
     }

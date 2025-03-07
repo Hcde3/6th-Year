@@ -12,7 +12,7 @@ def orderplanets(lst,element):
     return ordered_list
 
 #___ Initialising Firebase ___#
-cred = credentials.Certificate("exoplanet-dataset-firebase-adminsdk-shser-369d5308fe.json")
+cred = credentials.Certificate("exoplanet-dataset-firebase-adminsdk-shser-43e84d2fa9.json")
 firebase_admin.initialize_app(cred, {'databaseURL':'https://exoplanet-dataset-default-rtdb.europe-west1.firebasedatabase.app/'})
 ref = db.reference('/')
 firebase_content = ref.get('/users/Planet Info', None)
@@ -30,7 +30,10 @@ outlier_planets = {"Planets":{},"Averages":{}}
 planet_categories = {"Earthlike":earthlike,"Super Earth":superearth,"Mega Earth":megaearth,"Neptunelike":neptunelike,"Jupiterlike":jupiterlike,"Hot Jupiter":hotjupiter,"Brown Dwarf":browndwarf}
 numerical_type = ["sy_snum","sy_pnum","pl_orbsmax","pl_orbper","pl_rade","pl_radj","pl_bmasse","pl_bmassj","pl_dens","pl_orbeccen","pl_insol","pl_eqt","pl_orbincl","ttv_flag","pl_imppar","pl_orblper","st_teff","st_mass","st_lum","st_logg","ra","dec","sy_dist","sy_vmag","sy_kmag","sy_gaiamag","sy_gaiamagerr1","sy_gaiamagerr2"]
 list_of_radii = []
+all_radii = []
 list_of_masses = [[],[],[],[],[],[],[]]
+all_masses = []
+
 habitablecount = {"Earthlike":0,"Super Earth":0,"Mega Earth":0}
 telescopecounts = {}
 
@@ -40,6 +43,9 @@ for planet,data in planetdict.items():
     sy_pnum = int(data["sy_pnum"])
     E_mass = data["pl_bmasse"]
     E_radius = data["pl_rade"]
+    if E_mass < 17 and E_radius < 8 and len(all_masses) < 400:
+        all_masses.append(E_mass)
+        all_radii.append(E_radius)
     if data.get("pl_orbper"): orbital_period = data["pl_orbper"]
     else: orbital_period = False
     if E_mass < 2 and E_radius < 2.5: earthlike["Planets"][planet] = data
@@ -96,7 +102,17 @@ for i,category in enumerate(planet_categories):
 
 Analytics = {"Graph_Info":{},"Averages":{"Earthlike":earthlike["Averages"],"Super Earth":superearth["Averages"],"Mega Earth":megaearth["Averages"],"Neptunelike":neptunelike["Averages"],"Jupiterlike":jupiterlike["Averages"],"Hot Jupiter":hotjupiter["Averages"],"Brown Dwarf":browndwarf["Averages"]}} #Creating Analytics Dict
 
-#___ Pie Chart of Habitable Planets or Total Planets___#
+#__ Scatter Plot of Radius to Mass __#
+plot.scatter(all_masses,all_radii)
+plot.title('Terrestrial Exoplanet Radius to Mass Ratio')
+plot.xlabel('Planet Mass (Earth masses)')
+plot.ylabel('Planet Radius (Earth Radii)')
+Analytics["Graph_Info"]["Radius to Mass Ratio"] = {}
+Analytics["Graph_Info"]["Radius to Mass Ratio"]["Masses"] = all_masses
+Analytics["Graph_Info"]["Radius to Mass Ratio"]["Radii"] = all_radii
+plot.show()
+
+#___ Pie Chart of Habitable Planets and Total Planets___#
 cats = []
 counts = []
 for category,count in habitablecount.items():
@@ -160,6 +176,7 @@ plot.xlabel('Planet Types')
 plot.ylabel('Average Earth Radii')
 plot.show()
 Analytics["Graph_Info"]["Radii"] = list_of_radii
+
 
 #___ Transferring Data to FireBase ___#
 ref = db.reference('/Analytics')
